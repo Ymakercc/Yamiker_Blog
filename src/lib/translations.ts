@@ -1,0 +1,186 @@
+export type Lang = "zh" | "en";
+
+export const translations = {
+  zh: {
+    nav: {
+      home: "首页",
+      about: "关于",
+      blog: "博客",
+      projects: "项目",
+      contact: "联系",
+    },
+    hero: {
+      greeting: "你好，我是",
+      name: "Yamiker",
+      tagline: "开发者 · 写作者 · 探索者",
+      description:
+        "热爱技术与文字，在代码与思考之间寻找平衡。欢迎来到我的个人空间。",
+      cta: "了解更多",
+      blog: "查看博客",
+    },
+    about: {
+      title: "关于我",
+      subtitle: "一些关于我自己的故事",
+      body: "我是一名全栈开发者，对新技术充满热情。平时喜欢写作、摄影和探索新事物。这个博客是我记录思考、分享知识的地方。",
+      skills: "技术栈",
+      skillList: ["TypeScript", "React / Next.js", "Node.js", "Python", "云原生 & DevOps"],
+    },
+    blog: {
+      title: "最新文章",
+      subtitle: "记录思考，分享所得",
+      readMore: "阅读更多",
+      viewAll: "查看全部文章",
+      posts: [
+        {
+          title: "从零构建个人博客：Next.js + Tailwind CSS 实践",
+          date: "2026-06-10",
+          excerpt: "本文记录了我使用 Next.js 14 和 Tailwind CSS 从头搭建个人博客的全过程，包括项目结构设计、SEO 优化和 Vercel 部署。",
+          tags: ["Next.js", "TypeScript", "博客"],
+        },
+        {
+          title: "TypeScript 类型体操：从入门到精通",
+          date: "2026-05-28",
+          excerpt: "深入探讨 TypeScript 的高级类型特性，包括条件类型、映射类型和模板字面量类型，通过实际案例掌握类型体操的精髓。",
+          tags: ["TypeScript", "编程"],
+        },
+        {
+          title: "云原生时代的前端部署最佳实践",
+          date: "2026-05-15",
+          excerpt: "探讨在云原生环境下，如何利用 Vercel、Cloudflare 等平台实现高性能、高可用的前端应用部署方案。",
+          tags: ["云原生", "部署", "DevOps"],
+        },
+      ],
+    },
+    projects: {
+      title: "项目作品",
+      subtitle: "我正在构建的一些东西",
+      viewCode: "查看代码",
+      liveDemo: "在线预览",
+      items: [
+        {
+          name: "Yamiekr_Home",
+          description: "本站——使用 Next.js 14、TypeScript 和 Tailwind CSS 构建的个人主页与博客，支持中英双语切换，部署在 Vercel。",
+          tags: ["Next.js", "TypeScript", "Tailwind"],
+          url: "https://yamiker.cloud",
+        },
+        {
+          name: "DevTool Kit",
+          description: "面向开发者的在线工具集合，包含 JSON 格式化、Base64 编解码、正则测试等常用工具，纯前端实现无需后端。",
+          tags: ["React", "工具"],
+          url: "#",
+        },
+        {
+          name: "Note Sync",
+          description: "跨平台笔记同步工具，支持 Markdown 编辑、标签分类和全文搜索，数据存储在用户自己的云存储中。",
+          tags: ["Electron", "Node.js", "SQLite"],
+          url: "#",
+        },
+      ],
+    },
+    contact: {
+      title: "联系我",
+      subtitle: "有想法？随时来聊",
+      email: "发送邮件",
+      github: "GitHub",
+      twitter: "Twitter / X",
+      emailAddress: "Yyamiker@wjl.edu.kg",
+    },
+    footer: {
+      copy: "© 2026 Yamiker. 保留所有权利。",
+      builtWith: "基于 Next.js 构建，托管于 Vercel",
+    },
+    langToggle: "English",
+  },
+  en: {
+    nav: {
+      home: "Home",
+      about: "About",
+      blog: "Blog",
+      projects: "Projects",
+      contact: "Contact",
+    },
+    hero: {
+      greeting: "Hi, I'm",
+      name: "Yamiker",
+      tagline: "Developer · Writer · Explorer",
+      description:
+        "Passionate about technology and writing, finding balance between code and ideas. Welcome to my personal space.",
+      cta: "Learn More",
+      blog: "Read Blog",
+    },
+    about: {
+      title: "About Me",
+      subtitle: "A bit about my story",
+      body: "I'm a full-stack developer passionate about new technologies. In my spare time I enjoy writing, photography, and exploring new things. This blog is where I record my thoughts and share what I learn.",
+      skills: "Tech Stack",
+      skillList: ["TypeScript", "React / Next.js", "Node.js", "Python", "Cloud Native & DevOps"],
+    },
+    blog: {
+      title: "Latest Posts",
+      subtitle: "Thoughts, ideas, and things I've learned",
+      readMore: "Read More",
+      viewAll: "View All Posts",
+      posts: [
+        {
+          title: "Building a Personal Blog from Scratch: Next.js + Tailwind CSS",
+          date: "2026-06-10",
+          excerpt: "This post documents my journey building a personal blog with Next.js 14 and Tailwind CSS from scratch, covering project structure, SEO, and Vercel deployment.",
+          tags: ["Next.js", "TypeScript", "Blog"],
+        },
+        {
+          title: "TypeScript Advanced Types: From Basics to Mastery",
+          date: "2026-05-28",
+          excerpt: "A deep dive into TypeScript's advanced type features including conditional types, mapped types, and template literal types with practical examples.",
+          tags: ["TypeScript", "Programming"],
+        },
+        {
+          title: "Frontend Deployment Best Practices in the Cloud-Native Era",
+          date: "2026-05-15",
+          excerpt: "Exploring how to achieve high-performance, highly available frontend deployments using platforms like Vercel and Cloudflare in a cloud-native environment.",
+          tags: ["Cloud Native", "Deployment", "DevOps"],
+        },
+      ],
+    },
+    projects: {
+      title: "Projects",
+      subtitle: "Some things I've built",
+      viewCode: "View Code",
+      liveDemo: "Live Demo",
+      items: [
+        {
+          name: "Yamiekr_Home",
+          description: "This site — a personal homepage and blog built with Next.js 14, TypeScript, and Tailwind CSS. Supports Chinese/English switching and is deployed on Vercel.",
+          tags: ["Next.js", "TypeScript", "Tailwind"],
+          url: "https://yamiker.cloud",
+        },
+        {
+          name: "DevTool Kit",
+          description: "A collection of online developer tools including JSON formatter, Base64 encoder/decoder, and regex tester — pure frontend, no backend required.",
+          tags: ["React", "Tools"],
+          url: "#",
+        },
+        {
+          name: "Note Sync",
+          description: "A cross-platform note sync tool with Markdown editing, tag categorization, and full-text search. Data lives in the user's own cloud storage.",
+          tags: ["Electron", "Node.js", "SQLite"],
+          url: "#",
+        },
+      ],
+    },
+    contact: {
+      title: "Get In Touch",
+      subtitle: "Have an idea? Let's talk",
+      email: "Send Email",
+      github: "GitHub",
+      twitter: "Twitter / X",
+      emailAddress: "Yyamiker@wjl.edu.kg",
+    },
+    footer: {
+      copy: "© 2026 Yamiker. All rights reserved.",
+      builtWith: "Built with Next.js, hosted on Vercel",
+    },
+    langToggle: "中文",
+  },
+} as const;
+
+export type Translations = (typeof translations)[Lang];
