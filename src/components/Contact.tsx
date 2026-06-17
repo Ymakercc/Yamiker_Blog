@@ -34,7 +34,7 @@ export default function Contact() {
                     href={link.href}
                     target={link.href.startsWith("http") ? "_blank" : undefined}
                     rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group flex items-center gap-4 border border-border px-4 py-3 text-sm text-fg hover:border-amber hover:bg-amber hover:text-bg"
+                    className="pressable group flex items-center gap-4 border border-border px-4 py-3 text-sm text-fg hover:border-amber hover:bg-amber hover:text-bg"
                   >
                     <span
                       className="w-8 text-center font-display text-lg text-cyan group-hover:text-bg"

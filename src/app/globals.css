@@ -23,7 +23,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     background-color: var(--bg);
   }
 
@@ -64,11 +64,151 @@
   }
 }
 
+/* ── Pixel-terminal motion keyframes ─────────────────────────────────────
+   All discrete (steps), never smooth — typewriter, decode-in, press. */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Logo "decode / scan" entrance — 3–4 hard frames, no fade */
+@keyframes pixel-in {
+  0% { opacity: 0; transform: translateY(2px); filter: contrast(0) brightness(3); }
+  40% { opacity: 1; filter: contrast(3) brightness(0.6); }
+  70% { filter: contrast(1.5); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+
+/* Stepped reveal for sequenced / scrolled-in UI */
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Command palette box: hard stepped scale-in */
+@keyframes palette-in {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes dim-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @layer utilities {
   /* Pixel art / icons render crisp, not smoothed */
   .pixelated {
     image-rendering: pixelated;
   }
+
+  /* Logo decode-in — used by the hero boot sequence */
+  .logo-hero {
+    animation: pixel-in 0.35s steps(4) both;
+  }
+
+  /* One-shot stepped reveal */
+  .step-in {
+    animation: step-in 0.18s steps(3) both;
+  }
+
+  /* ── Pixel button: hard drop shadow, invert on hover, press eats shadow ── */
+  .btn-pixel {
+    border: 1px solid var(--border);
+    box-shadow: 4px 4px 0 0 var(--border);
+    transition: none;
+  }
+  .btn-pixel:hover,
+  .btn-pixel:focus-visible {
+    background-color: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+  }
+  .btn-pixel:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 var(--border);
+  }
+  /* Compact variant — 2px offset, for dense nav controls */
+  .btn-pixel-sm {
+    border: 1px solid var(--border);
+    box-shadow: 2px 2px 0 0 var(--border);
+    transition: none;
+  }
+  .btn-pixel-sm:hover,
+  .btn-pixel-sm:focus-visible {
+    background-color: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+  }
+  .btn-pixel-sm:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 var(--border);
+  }
+
+  /* Amber-forward variant — already outlined in amber at rest */
+  .btn-pixel-amber {
+    border-color: var(--amber);
+    color: var(--amber);
+    box-shadow: 4px 4px 0 0 var(--amber);
+  }
+  .btn-pixel-amber:active {
+    box-shadow: 0 0 0 0 var(--amber);
+  }
+
+  /* Lightweight press feedback for full-width / shadowless controls */
+  .pressable {
+    transition: none;
+  }
+  .pressable:active {
+    transform: translate(2px, 2px);
+  }
+
+  /* Nav link: snap to amber + reveal a ">" prefix on hover (no easing) */
+  .nav-link {
+    position: relative;
+    transition: none;
+  }
+  .nav-link::before {
+    content: ">";
+    position: absolute;
+    left: 0.15rem;
+    opacity: 0;
+    color: var(--amber);
+  }
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--amber);
+  }
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before {
+    opacity: 1;
+  }
+
+  /* Terminal title-bar dots: discrete brighten + bump on hover */
+  .term-dot {
+    transition: none;
+  }
+  .term-dot:hover {
+    transform: scale(1.25);
+    filter: brightness(1.4);
+  }
+
+  /* ── Scroll reveal: container hides its direct children, then steps them in
+     in a staggered cascade. The .reveal-group class is added by the
+     useRevealOnScroll hook *only* when motion is allowed, so reduced-motion
+     and no-JS both fall back to fully-visible content. */
+  .reveal-group > * {
+    opacity: 0;
+  }
+  .reveal-group.is-revealed > * {
+    animation: step-in 0.22s steps(3) both;
+  }
+  .reveal-group.is-revealed > *:nth-child(1) { animation-delay: 0ms; }
+  .reveal-group.is-revealed > *:nth-child(2) { animation-delay: 60ms; }
+  .reveal-group.is-revealed > *:nth-child(3) { animation-delay: 120ms; }
+  .reveal-group.is-revealed > *:nth-child(4) { animation-delay: 180ms; }
+  .reveal-group.is-revealed > *:nth-child(5) { animation-delay: 240ms; }
+  .reveal-group.is-revealed > *:nth-child(6) { animation-delay: 300ms; }
+  .reveal-group.is-revealed > *:nth-child(n + 7) { animation-delay: 360ms; }
 
   /* Blinking block cursor — a restrained terminal motif */
   .cursor-block {
@@ -106,9 +246,20 @@
     background-color: var(--amber);
     color: var(--bg);
   }
+
+  /* Command palette entrance — hard stepped scale + backdrop dim */
+  .palette-in {
+    animation: palette-in 0.12s steps(3) both;
+  }
+  .dim-in {
+    animation: dim-in 0.12s steps(2) both;
+  }
 }
 
-/* Respect users who ask for less motion: kill non-essential animation */
+/* Respect users who ask for less motion: drop straight to the terminal state.
+   Sequenced reveals (.step-in / .logo-hero / .reveal-group) all render their
+   final, visible state with animation off; the JS typewriter checks this query
+   too and fills in full text immediately. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -116,12 +267,11 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    animation: none !important;
+    transition: none !important;
   }
+  /* Cursor stays as a static block — present, but not blinking */
   .cursor-block {
-    animation: none;
     opacity: 1;
   }
   .scanlines::before {

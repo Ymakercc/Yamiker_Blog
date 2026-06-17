@@ -1,9 +1,11 @@
 "use client";
 
 import { useLang } from "@/contexts/LanguageContext";
+import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 
 export default function Projects() {
   const { t } = useLang();
+  const gridRef = useRevealOnScroll<HTMLDivElement>();
 
   return (
     <section id="projects" className="scroll-mt-16 py-24">
@@ -17,8 +19,8 @@ export default function Projects() {
           <h2 className="font-display text-4xl text-fg sm:text-5xl">{t.projects.title}</h2>
         </div>
 
-        {/* Cartridge panels */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Cartridge panels — stepped in on scroll */}
+        <div ref={gridRef} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {t.projects.items.map((project, idx) => (
             <article
               key={idx}
@@ -50,7 +52,7 @@ export default function Projects() {
                   href={project.url}
                   target={project.url.startsWith("http") ? "_blank" : undefined}
                   rel={project.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="inline-flex w-fit items-center gap-2 border border-border px-3 py-1.5 text-xs text-fg hover:border-amber hover:text-amber"
+                  className="btn-pixel-sm inline-flex w-fit items-center gap-2 px-3 py-1.5 text-xs text-fg"
                 >
                   {t.projects.liveDemo}
                   <span aria-hidden="true">↗</span>

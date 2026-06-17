@@ -43,7 +43,7 @@ export default function Navbar() {
         <ul className="hidden items-center gap-1 text-sm md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a href={link.href} className="link-invert px-3 py-1.5 text-fg">
+              <a href={link.href} className="nav-link px-3 py-1.5 text-fg">
                 {link.label}
               </a>
             </li>
@@ -55,7 +55,7 @@ export default function Navbar() {
           {/* Desktop: ⌘K hint button */}
           <button
             onClick={openPalette}
-            className="hidden items-center gap-2 border border-border px-3 py-1.5 text-xs text-muted hover:border-amber hover:text-amber sm:inline-flex"
+            className="btn-pixel-sm hidden items-center gap-2 px-3 py-1.5 text-xs text-muted sm:inline-flex"
             aria-label={t.cmd.open}
           >
             <span aria-hidden="true">⌘K</span>
@@ -63,7 +63,7 @@ export default function Navbar() {
 
           <button
             onClick={toggleLang}
-            className="border border-border px-3 py-1.5 text-sm text-fg hover:border-amber hover:text-amber"
+            className="btn-pixel-sm px-3 py-1.5 text-sm text-fg"
             aria-label="Toggle language"
           >
             {t.langToggle}
@@ -71,7 +71,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="border border-border p-2 text-fg hover:border-amber hover:text-amber md:hidden"
+            className="btn-pixel-sm p-2 text-fg md:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}

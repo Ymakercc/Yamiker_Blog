@@ -1,9 +1,11 @@
 "use client";
 
 import { useLang } from "@/contexts/LanguageContext";
+import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 
 export default function BlogPreview() {
   const { t } = useLang();
+  const listRef = useRevealOnScroll<HTMLUListElement>();
 
   return (
     <section id="blog" className="scroll-mt-16 py-24">
@@ -17,8 +19,8 @@ export default function BlogPreview() {
           <h2 className="font-display text-4xl text-fg sm:text-5xl">{t.blog.title}</h2>
         </div>
 
-        {/* Posts — a clean reading list */}
-        <ul className="border-t border-border">
+        {/* Posts — a clean reading list, stepped in on scroll */}
+        <ul ref={listRef} className="border-t border-border">
           {t.blog.posts.map((post, idx) => (
             <li key={idx} className="border-b border-border">
               <a
@@ -58,7 +60,7 @@ export default function BlogPreview() {
         <div className="mt-10">
           <a
             href="#"
-            className="inline-flex items-center gap-2 border border-border px-5 py-2.5 text-sm text-fg hover:border-amber hover:text-amber"
+            className="btn-pixel inline-flex items-center gap-2 px-5 py-2.5 text-sm text-fg"
           >
             {t.blog.viewAll}
             <span aria-hidden="true">→</span>
