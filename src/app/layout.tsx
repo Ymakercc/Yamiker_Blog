@@ -75,8 +75,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh" className="scroll-smooth">
-      <body className={inter.variable}>
+    <html lang="zh" className="scroll-smooth dark">
+      <body className={`${inter.variable} min-h-screen`}>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

@@ -25,26 +25,32 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100"
-          : "bg-transparent"
+          ? "glass-strong shadow-lg shadow-black/40 border-b border-white/10"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <a
           href="#"
-          className="font-bold text-xl tracking-tight text-slate-900 hover:text-accent-600 transition-colors"
+          className="group flex items-center gap-2 font-bold text-lg tracking-tight text-white"
         >
-          Yamiekr_Home
+          <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-400 to-violet-500 text-sm font-black text-white shadow-glow">
+            Y
+            <span className="absolute inset-0 rounded-lg ring-1 ring-white/30" />
+          </span>
+          <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent group-hover:from-accent-300 group-hover:to-violet-300 transition-all">
+            Yamiekr_Home
+          </span>
         </a>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <ul className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-300">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="hover:text-accent-600 transition-colors"
+                className="relative px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-colors"
               >
                 {link.label}
               </a>
@@ -56,7 +62,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={toggleLang}
-            className="text-sm font-medium px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:border-accent-400 hover:text-accent-600 transition-all"
+            className="text-sm font-medium px-3.5 py-1.5 rounded-full glass text-slate-200 hover:text-white hover:border-accent-400/60 hover:shadow-glow transition-all"
             aria-label="Toggle language"
           >
             {t.langToggle}
@@ -64,7 +70,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+            className="md:hidden p-2 rounded-lg glass text-slate-200 hover:text-white transition-colors"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -83,14 +89,14 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-100 shadow-lg">
-          <ul className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm font-medium text-slate-600">
+        <div className="md:hidden glass-strong border-t border-white/10 shadow-xl shadow-black/40">
+          <ul className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1 text-sm font-medium text-slate-300">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block py-2 hover:text-accent-600 transition-colors"
+                  className="block px-3 py-2.5 rounded-lg hover:text-white hover:bg-white/5 transition-colors"
                 >
                   {link.label}
                 </a>
