@@ -10,6 +10,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
+    handler();
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -21,37 +22,28 @@ export default function Navbar() {
     { href: "#contact", label: t.nav.contact },
   ];
 
+  const openPalette = () => window.dispatchEvent(new Event("open-command-palette"));
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "glass-strong shadow-lg shadow-black/40 border-b border-white/10"
-          : "bg-transparent border-b border-transparent"
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-bg ${
+        scrolled ? "border-border" : "border-transparent"
       }`}
     >
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Wordmark — Press Start 2P, small */}
         <a
-          href="#"
-          className="group flex items-center gap-2 font-bold text-lg tracking-tight text-white"
+          href="#home"
+          className="link-invert px-1 py-1 font-wordmark text-[10px] text-fg sm:text-xs"
         >
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-400 to-violet-500 text-sm font-black text-white shadow-glow">
-            Y
-            <span className="absolute inset-0 rounded-lg ring-1 ring-white/30" />
-          </span>
-          <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent group-hover:from-accent-300 group-hover:to-violet-300 transition-all">
-            Yamiekr_Home
-          </span>
+          Yamiekr_Home
         </a>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-300">
+        <ul className="hidden items-center gap-1 text-sm md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
-                className="relative px-3 py-2 rounded-lg hover:text-white hover:bg-white/5 transition-colors"
-              >
+              <a href={link.href} className="link-invert px-3 py-1.5 text-fg">
                 {link.label}
               </a>
             </li>
@@ -59,10 +51,19 @@ export default function Navbar() {
         </ul>
 
         {/* Right controls */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          {/* Desktop: ⌘K hint button */}
+          <button
+            onClick={openPalette}
+            className="hidden items-center gap-2 border border-border px-3 py-1.5 text-xs text-muted hover:border-amber hover:text-amber sm:inline-flex"
+            aria-label={t.cmd.open}
+          >
+            <span aria-hidden="true">⌘K</span>
+          </button>
+
           <button
             onClick={toggleLang}
-            className="text-sm font-medium px-3.5 py-1.5 rounded-full glass text-slate-200 hover:text-white hover:border-accent-400/60 hover:shadow-glow transition-all"
+            className="border border-border px-3 py-1.5 text-sm text-fg hover:border-amber hover:text-amber"
             aria-label="Toggle language"
           >
             {t.langToggle}
@@ -70,17 +71,18 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg glass text-slate-200 hover:text-white transition-colors"
+            className="border border-border p-2 text-fg hover:border-amber hover:text-amber md:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
             {menuOpen ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
           </button>
@@ -89,19 +91,30 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden glass-strong border-t border-white/10 shadow-xl shadow-black/40">
-          <ul className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1 text-sm font-medium text-slate-300">
+        <div className="border-t border-border bg-bg md:hidden">
+          <ul className="mx-auto flex max-w-6xl flex-col px-4 py-3 text-sm">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-2.5 rounded-lg hover:text-white hover:bg-white/5 transition-colors"
+                  className="link-invert block px-3 py-2.5 text-fg"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  openPalette();
+                }}
+                className="link-invert block w-full px-3 py-2.5 text-left text-amber"
+              >
+                {`> ${t.cmd.open}`}
+              </button>
+            </li>
           </ul>
         </div>
       )}

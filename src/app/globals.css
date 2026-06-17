@@ -4,137 +4,127 @@
 
 @layer base {
   :root {
-    --background: 5 6 13;
-    --foreground: 226 232 240;
+    /* Pixel-Terminal palette — the only colors used site-wide */
+    --bg: #0e0c0a;
+    --surface: #1a1612;
+    --fg: #e8dcc8;
+    --muted: #8a7f6d;
+    --amber: #ffa51f;
+    --cyan: #5fd7d7;
+    --red: #e5484d;
+    --border: #2a241c;
+  }
+
+  /* Zero rounding, everywhere. */
+  *,
+  *::before,
+  *::after {
+    border-radius: 0 !important;
   }
 
   html {
     scroll-behavior: smooth;
+    background-color: var(--bg);
   }
 
   body {
-    @apply bg-ink-950 text-slate-200 antialiased;
-    background-image:
-      radial-gradient(900px circle at 12% -10%, rgba(56, 189, 248, 0.16), transparent 45%),
-      radial-gradient(800px circle at 88% 8%, rgba(139, 92, 246, 0.16), transparent 45%),
-      radial-gradient(1000px circle at 50% 110%, rgba(217, 70, 239, 0.1), transparent 50%);
-    background-attachment: fixed;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-jetbrains), ui-monospace, monospace;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background-color: rgba(56, 189, 248, 0.3);
-    color: #f8fafc;
+    background-color: var(--amber);
+    color: var(--bg);
   }
 
-  /* Custom scrollbar */
+  /* Visible, consistent keyboard focus */
+  :focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  /* Terminal-flavoured scrollbar — flat, no gradients */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
   }
   ::-webkit-scrollbar-track {
-    background: #05060d;
+    background: var(--bg);
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #0ea5e9, #8b5cf6);
-    border-radius: 9999px;
-    border: 2px solid #05060d;
+    background: var(--border);
+    border: 3px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /* Pixel art / icons render crisp, not smoothed */
+  .pixelated {
+    image-rendering: pixelated;
   }
 
-  .gradient-text {
-    @apply bg-gradient-to-r from-accent-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent;
-    background-size: 200% auto;
+  /* Blinking block cursor — a restrained terminal motif */
+  .cursor-block {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    margin-left: 0.1em;
+    vertical-align: text-bottom;
+    background-color: var(--amber);
+    animation: blink 1s steps(1) infinite;
   }
 
-  .gradient-text-animated {
-    @apply bg-gradient-to-r from-accent-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent;
-    background-size: 200% auto;
-    animation: gradientShift 8s ease infinite;
-  }
-
-  .section-padding {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-
-  /* Glassmorphism surface */
-  .glass {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .glass-strong {
-    background: rgba(13, 17, 34, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Gradient hairline border via mask trick */
-  .gradient-border {
-    position: relative;
-  }
-  .gradient-border::before {
+  /* Extremely faint CRT scanline veil — off for reduced motion */
+  .scanlines::before {
     content: "";
-    position: absolute;
+    position: fixed;
     inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      rgba(56, 189, 248, 0.6),
-      rgba(139, 92, 246, 0.35) 40%,
-      rgba(255, 255, 255, 0.05) 70%
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    z-index: 1;
     pointer-events: none;
-  }
-
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-    background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 50%, transparent 100%);
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 50%, transparent 100%);
-  }
-
-  /* Animated conic spotlight used behind hero name */
-  .spotlight {
-    background: conic-gradient(
-      from 180deg at 50% 50%,
-      rgba(56, 189, 248, 0.18),
-      rgba(139, 92, 246, 0.18),
-      rgba(217, 70, 239, 0.18),
-      rgba(56, 189, 248, 0.18)
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.035) 3px,
+      rgba(0, 0, 0, 0) 4px
     );
   }
 
-  .shimmer-line {
-    position: relative;
-    overflow: hidden;
+  /* Hover color-block inversion for links */
+  .link-invert {
+    transition: none;
   }
-  .shimmer-line::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      110deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.18) 50%,
-      transparent 70%
-    );
-    transform: translateX(-100%);
-    animation: shimmer 3s ease-in-out infinite;
+  .link-invert:hover,
+  .link-invert:focus-visible {
+    background-color: var(--amber);
+    color: var(--bg);
+  }
+}
+
+/* Respect users who ask for less motion: kill non-essential animation */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .cursor-block {
+    animation: none;
+    opacity: 1;
+  }
+  .scanlines::before {
+    display: none;
   }
 }

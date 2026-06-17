@@ -6,14 +6,11 @@ export default function Footer() {
   const { t } = useLang();
 
   return (
-    <footer className="relative py-10 border-t border-white/10">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-400/50 to-transparent" />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-500">
+    <footer className="border-t border-border">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-xs text-muted sm:flex-row sm:px-6 lg:px-8">
         <p className="flex items-center gap-2">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-accent-400 to-violet-500 text-[10px] font-black text-white">
-            Y
-          </span>
-          {t.footer.copy}
+          <span className="font-wordmark text-[8px] text-amber">Y</span>
+          <span>{t.footer.copy}</span>
         </p>
         <p>{t.footer.builtWith}</p>
       </div>

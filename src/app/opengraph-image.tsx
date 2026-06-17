@@ -19,18 +19,19 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "72px",
-          color: "white",
-          background:
-            "radial-gradient(circle at 20% 20%, #38bdf8 0, transparent 32%), radial-gradient(circle at 80% 10%, #8b5cf6 0, transparent 30%), linear-gradient(135deg, #020617 0%, #0f172a 52%, #111827 100%)",
+          background: "#0E0C0A",
+          color: "#E8DCC8",
+          fontFamily: "monospace",
+          border: "8px solid #2A241C",
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 4, color: "#7dd3fc" }}>
-          YAMIKER.CLOUD
+        <div style={{ fontSize: 28, letterSpacing: 6, color: "#5FD7D7" }}>
+          $ guest@yamiker:~
         </div>
-        <div style={{ marginTop: 28, fontSize: 86, fontWeight: 800 }}>
+        <div style={{ marginTop: 28, fontSize: 86, fontWeight: 800, color: "#FFA51F" }}>
           Yamiekr_Home
         </div>
-        <div style={{ marginTop: 24, maxWidth: 850, fontSize: 34, lineHeight: 1.35, color: "#cbd5e1" }}>
+        <div style={{ marginTop: 24, maxWidth: 850, fontSize: 34, lineHeight: 1.35, color: "#8A7F6D" }}>
           Developer · Writer · Explorer / 开发者 · 写作者 · 探索者
         </div>
       </div>

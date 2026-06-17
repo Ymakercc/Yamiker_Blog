@@ -6,78 +6,57 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        // Press Start 2P — wordmark only, never body text
+        wordmark: ["var(--font-press-start)", "monospace"],
+        // VT323 — readable pixel font for headings / eyebrows
+        display: ["var(--font-vt323)", "monospace"],
+        // JetBrains Mono — body, code, data
+        mono: ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
-        accent: {
-          50: "#f0f9ff",
-          100: "#e0f2fe",
-          200: "#bae6fd",
-          300: "#7dd3fc",
-          400: "#38bdf8",
-          500: "#0ea5e9",
-          600: "#0284c7",
-          700: "#0369a1",
-          800: "#075985",
-          900: "#0c4a6e",
-        },
-        ink: {
-          950: "#05060d",
-          900: "#0a0c18",
-          850: "#0e1122",
-          800: "#13172b",
-          700: "#1b2036",
-        },
+        // The only palette — sourced from CSS variables in globals.css
+        bg: "var(--bg)",
+        surface: "var(--surface)",
+        fg: "var(--fg)",
+        muted: "var(--muted)",
+        amber: "var(--amber)",
+        cyan: "var(--cyan)",
+        red: "var(--red)",
+        border: "var(--border)",
       },
-      backgroundImage: {
-        "grid-faint":
-          "linear-gradient(to right, rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(148,163,184,0.06) 1px, transparent 1px)",
-        "radial-fade":
-          "radial-gradient(ellipse at top, rgba(56,189,248,0.12), transparent 60%)",
+      borderRadius: {
+        none: "0",
+        DEFAULT: "0",
+        sm: "0",
+        md: "0",
+        lg: "0",
+        xl: "0",
+        "2xl": "0",
+        "3xl": "0",
+        full: "0",
       },
       boxShadow: {
-        glow: "0 0 40px -8px rgba(56,189,248,0.45)",
-        "glow-violet": "0 0 40px -8px rgba(139,92,246,0.45)",
-        "glow-lg": "0 0 80px -12px rgba(56,189,248,0.5)",
+        // Hard pixel offset shadows — never blurred and never colored
+        pixel: "4px 4px 0 0 var(--border)",
+        "pixel-sm": "2px 2px 0 0 var(--border)",
+        none: "none",
       },
       animation: {
-        "fade-in": "fadeIn 0.8s ease-out forwards",
-        "slide-up": "slideUp 0.7s ease-out forwards",
-        float: "float 7s ease-in-out infinite",
-        "float-slow": "float 11s ease-in-out infinite",
-        "gradient-shift": "gradientShift 8s ease infinite",
-        "glow-pulse": "glowPulse 4s ease-in-out infinite",
-        "spin-slow": "spin 18s linear infinite",
-        shimmer: "shimmer 2.5s linear infinite",
+        blink: "blink 1s steps(1) infinite",
+        "boot-in": "bootIn 0.18s steps(4) forwards",
       },
       keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+        blink: {
+          "0%, 50%": { opacity: "1" },
+          "51%, 100%": { opacity: "0" },
         },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(24px)" },
+        bootIn: {
+          "0%": { opacity: "0", transform: "translateY(4px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-26px)" },
-        },
-        gradientShift: {
-          "0%, 100%": { "background-position": "0% 50%" },
-          "50%": { "background-position": "100% 50%" },
-        },
-        glowPulse: {
-          "0%, 100%": { opacity: "0.35", transform: "scale(1)" },
-          "50%": { opacity: "0.6", transform: "scale(1.08)" },
-        },
-        shimmer: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
         },
       },
     },

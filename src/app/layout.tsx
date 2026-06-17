@@ -1,9 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Press_Start_2P, VT323, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// Wordmark only — never used for body copy
+const pressStart = Press_Start_2P({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-press-start",
+  display: "swap",
+});
+
+// Headings / eyebrows — a readable pixel face
+const vt323 = VT323({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-vt323",
+  display: "swap",
+});
+
+// Body / code / data — monospaced, set at a comfortable line-height
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -75,8 +96,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh" className="scroll-smooth dark">
-      <body className={`${inter.variable} min-h-screen`}>
+    <html
+      lang="zh"
+      className={`${pressStart.variable} ${vt323.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="min-h-screen font-mono scanlines">
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

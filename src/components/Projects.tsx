@@ -6,68 +6,57 @@ export default function Projects() {
   const { t } = useLang();
 
   return (
-    <section id="projects" className="relative py-28 overflow-hidden">
-      <div className="absolute bottom-0 left-1/3 w-96 h-96 rounded-full bg-fuchsia-500/10 blur-3xl pointer-events-none" />
-
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="scroll-mt-16 py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
-          <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent-300 uppercase tracking-widest mb-4 glass rounded-full px-3 py-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-400" />
+        <div className="mb-12">
+          <p className="mb-3 font-display text-lg uppercase tracking-widest text-amber">
+            <span aria-hidden="true">{"// "}</span>
             {t.projects.subtitle}
           </p>
-          <h2 className="text-4xl font-bold text-white">{t.projects.title}</h2>
+          <h2 className="font-display text-4xl text-fg sm:text-5xl">{t.projects.title}</h2>
         </div>
 
-        {/* Projects list */}
-        <div className="space-y-5">
+        {/* Cartridge panels */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {t.projects.items.map((project, idx) => (
-            <div
+            <article
               key={idx}
-              className="group relative flex flex-col sm:flex-row gap-6 p-6 sm:p-7 rounded-3xl glass hover:border-accent-400/40 hover:shadow-glow hover:-translate-y-1 transition-all duration-300"
+              className="flex flex-col border border-border bg-surface shadow-pixel"
             >
-              {/* Index */}
-              <div className="flex-shrink-0 w-14 h-14 rounded-2xl gradient-border bg-gradient-to-br from-accent-500 via-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-black text-lg shadow-glow">
-                {String(idx + 1).padStart(2, "0")}
+              {/* Cartridge header */}
+              <div className="flex items-center justify-between border-b border-border px-4 py-2">
+                <span className="font-display text-base text-muted">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <span className="h-2.5 w-6 border border-border bg-amber" aria-hidden="true" />
               </div>
 
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
-                  <h3 className="font-bold text-white text-xl group-hover:text-accent-300 transition-colors">
-                    {project.name}
-                  </h3>
-                  <div className="flex gap-2">
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-white/5 text-accent-300 border border-white/10 hover:bg-accent-500/10 hover:border-accent-400/40 hover:text-accent-200 transition-colors flex items-center gap-1.5"
-                    >
-                      {t.projects.liveDemo}
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-
-                <p className="text-slate-400 text-sm leading-relaxed mb-4">
+              <div className="flex flex-1 flex-col p-5">
+                <h3 className="mb-3 font-display text-2xl text-fg">{project.name}</h3>
+                <p className="mb-5 flex-1 text-sm leading-relaxed text-muted">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5">
+                <ul className="mb-5 flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-white/5 text-slate-300 border border-white/10"
-                    >
-                      {tag}
-                    </span>
+                    <li key={tag} className="text-xs text-cyan">
+                      #{tag}
+                    </li>
                   ))}
-                </div>
+                </ul>
+
+                <a
+                  href={project.url}
+                  target={project.url.startsWith("http") ? "_blank" : undefined}
+                  rel={project.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="inline-flex w-fit items-center gap-2 border border-border px-3 py-1.5 text-xs text-fg hover:border-amber hover:text-amber"
+                >
+                  {t.projects.liveDemo}
+                  <span aria-hidden="true">↗</span>
+                </a>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
