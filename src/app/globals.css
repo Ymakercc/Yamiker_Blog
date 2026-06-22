@@ -297,6 +297,50 @@
   }
 }
 
+/* ── Pixel cursor ─────────────────────────────────────────────────────────
+   Shown only on pointer:fine (mouse) devices — JS sets display:block.
+   All transitions are "none" to match the zero-easing theme.              */
+#px-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--amber);
+  /* no transition — pixel-sharp movement */
+}
+
+/* Center dot */
+#px-cursor span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%);
+  background-color: var(--amber);
+}
+
+/* Hovering a link / button → cyan variant */
+#px-cursor[data-hover="1"] {
+  border-color: var(--cyan);
+  background-color: rgba(95, 215, 215, 0.08);
+}
+#px-cursor[data-hover="1"] span {
+  background-color: var(--cyan);
+}
+
+/* Mouse button held → amber flash */
+#px-cursor[data-active] {
+  background-color: rgba(255, 165, 31, 0.35);
+  border-color: var(--amber);
+}
+#px-cursor[data-active] span {
+  background-color: var(--amber);
+}
+
 /* Respect users who ask for less motion: drop straight to the terminal state.
    Sequenced reveals (.step-in / .logo-hero / .reveal-group) all render their
    final, visible state with animation off; the JS typewriter checks this query
