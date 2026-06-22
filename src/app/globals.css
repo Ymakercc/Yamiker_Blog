@@ -15,11 +15,24 @@
     --border: #2a241c;
   }
 
-  /* Zero rounding, everywhere. */
-  *,
-  *::before,
-  *::after {
+  /* Zero rounding — pixel theme only. Glass theme restores soft corners. */
+  [data-theme="pixel"] *,
+  [data-theme="pixel"] *::before,
+  [data-theme="pixel"] *::after {
     border-radius: 0 !important;
+  }
+
+  /* ── Glass theme — frosted glassmorphism over the aurora background ──────
+     A softer, cooler palette; surfaces become translucent + blurred.       */
+  [data-theme="glass"] {
+    --bg: #0a0d14;
+    --surface: rgba(28, 33, 46, 0.5);
+    --fg: #eef1f6;
+    --muted: #a6afc2;
+    --amber: #ffc061;
+    --cyan: #74e6e6;
+    --red: #ff6b70;
+    --border: rgba(255, 255, 255, 0.14);
   }
 
   html {
@@ -314,6 +327,70 @@
   .dim-in {
     animation: dim-in 0.12s steps(2) both;
   }
+}
+
+/* ── Glass theme surface treatments ───────────────────────────────────────
+   Re-skin the pixel terminal surfaces as frosted glass WITHOUT touching
+   component markup. Cards use `bg-surface` + `shadow-pixel`; buttons use
+   `.btn-pixel*`. We restyle those selectors under [data-theme="glass"].   */
+
+/* Drop the amber dot-grid + CRT scanlines — glass wants a clean canvas */
+[data-theme="glass"] body {
+  background-image: none;
+}
+[data-theme="glass"] .scanlines::before {
+  display: none;
+}
+
+/* Frosted, rounded cards */
+[data-theme="glass"] .bg-surface {
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+[data-theme="glass"] .shadow-pixel,
+[data-theme="glass"] .shadow-pixel-sm {
+  border-radius: 18px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* Smooth hovers instead of hard inversions */
+[data-theme="glass"] .btn-pixel,
+[data-theme="glass"] .btn-pixel-sm,
+[data-theme="glass"] .btn-pixel-amber {
+  border-radius: 12px;
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+[data-theme="glass"] .btn-pixel:hover,
+[data-theme="glass"] .btn-pixel:focus-visible,
+[data-theme="glass"] .btn-pixel-sm:hover,
+[data-theme="glass"] .btn-pixel-sm:focus-visible {
+  background-color: var(--amber);
+  color: var(--bg);
+  border-color: var(--amber);
+}
+[data-theme="glass"] .btn-pixel:active,
+[data-theme="glass"] .btn-pixel-sm:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* Soft rounding on the small accents so nothing stays sharp-cornered */
+[data-theme="glass"] .term-dot { border-radius: 9999px; }
+[data-theme="glass"] .cursor-block { border-radius: 2px; }
+
+/* Nav-link hover stays color-only — works as-is. Portal tiles inherit the
+   frosted-card treatment above and get a smooth lift on hover. */
+[data-theme="glass"] .group {
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+[data-theme="glass"] .group:hover {
+  transform: translateY(-2px);
 }
 
 /* Respect users who ask for less motion: drop straight to the terminal state.

@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useLang } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Navbar() {
   const { t, toggleLang } = useLang();
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -59,6 +61,19 @@ export default function Navbar() {
             aria-label={t.cmd.open}
           >
             <span aria-hidden="true">⌘K</span>
+          </button>
+
+          {/* Theme switch — pixel ⇄ glass */}
+          <button
+            onClick={toggleTheme}
+            className="btn-pixel-sm inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-fg"
+            aria-label={t.theme.toggle}
+            title={t.theme.toggle}
+          >
+            <span aria-hidden="true">{theme === "pixel" ? "▦" : "◐"}</span>
+            <span className="hidden sm:inline">
+              {theme === "pixel" ? t.theme.pixel : t.theme.glass}
+            </span>
           </button>
 
           <button

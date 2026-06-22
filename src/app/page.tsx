@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
+import Portal from "@/components/Portal";
 import About from "@/components/About";
 import BlogPreview from "@/components/BlogPreview";
 import Projects from "@/components/Projects";
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <Hero />
+      <Portal />
       <About />
       <BlogPreview />
       <Projects />

@@ -3,6 +3,10 @@ import { Press_Start_2P, VT323, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import AuraBg from "@/components/AuraBg";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+
+// Runs before paint to apply the saved theme — avoids a flash of the default.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='glass'||t==='pixel'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`;
 
 // Wordmark only — never used for body copy
 const pressStart = Press_Start_2P({
@@ -99,11 +103,18 @@ export default function RootLayout({
   return (
     <html
       lang="zh"
+      data-theme="pixel"
+      suppressHydrationWarning
       className={`${pressStart.variable} ${vt323.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-screen font-mono scanlines">
-        <AuraBg />
-        <LanguageProvider>{children}</LanguageProvider>
+        <ThemeProvider>
+          <AuraBg />
+          <LanguageProvider>{children}</LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
