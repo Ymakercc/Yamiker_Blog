@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BlogPreview from "@/components/BlogPreview";
+import ContentPage from "@/components/ContentPage";
 
 export const metadata: Metadata = {
   title: "博客",
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen">
+    <ContentPage>
       <BlogPreview />
-    </div>
+    </ContentPage>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Contact from "@/components/Contact";
+import ContentPage from "@/components/ContentPage";
 
 export const metadata: Metadata = {
   title: "联系",
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen">
+    <ContentPage>
       <Contact />
-    </div>
+    </ContentPage>
   );
 }

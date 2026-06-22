@@ -67,6 +67,7 @@ function Icon({ name }: { name: IconKey }) {
 export default function Portal() {
   const { t, lang } = useLang();
   const [now, setNow] = useState<Date | null>(null);
+  const [quote, setQuote] = useState<string>(t.portal.quotes[0]);
 
   useEffect(() => {
     setNow(new Date());
@@ -74,10 +75,14 @@ export default function Portal() {
     return () => clearInterval(id);
   }, []);
 
+  // Re-pick a random quote on mount and whenever the language changes.
+  useEffect(() => {
+    const q = t.portal.quotes;
+    setQuote(q[Math.floor(Math.random() * q.length)]);
+  }, [t]);
+
   const locale = lang === "zh" ? "zh-CN" : "en-US";
-  const timeStr = now
-    ? now.toLocaleTimeString(locale, { hour12: false })
-    : "--:--:--";
+  const timeStr = now ? now.toLocaleTimeString(locale, { hour12: false }) : "--:--:--";
   const dateStr = now
     ? now.toLocaleDateString(locale, {
         year: "numeric",
@@ -90,8 +95,6 @@ export default function Portal() {
   const openPalette = () =>
     window.dispatchEvent(new Event("open-command-palette"));
 
-  // Navigation tiles — anchors scroll to sections; github opens external;
-  // command opens the palette.
   const tiles: {
     key: IconKey;
     label: string;
@@ -115,124 +118,148 @@ export default function Portal() {
   ];
 
   const tileClass =
-    "group flex flex-col gap-2 border border-border bg-surface p-4 shadow-pixel-sm hover:border-amber focus-visible:border-amber";
+    "group flex flex-col justify-center gap-1.5 border border-border bg-surface p-4 shadow-pixel-sm hover:border-amber focus-visible:border-amber";
 
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center px-4 pt-20 pb-12 sm:px-6 lg:px-8"
+      className="relative min-h-screen px-4 pb-6 pt-16 sm:px-6 lg:h-screen lg:overflow-hidden lg:px-8"
     >
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
-          {/* ── LEFT: identity ───────────────────────────────────────── */}
-          <div>
-            <h1 className="mb-4 font-wordmark text-3xl leading-tight text-amber sm:text-4xl">
-              {t.hero.name}
-            </h1>
-            <p className="mb-7 font-display text-2xl text-fg sm:text-3xl">
-              {t.hero.tagline}
-              <span className="cursor-block" aria-hidden="true" />
-            </p>
+      <div className="mx-auto flex h-full max-w-7xl flex-col gap-4">
+        {/* ── Top zone: identity (2/3) + clock & quote (1/3) ───────────── */}
+        <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-3">
+          {/* Identity card */}
+          <div className="flex min-h-0 flex-col border border-border bg-surface shadow-pixel lg:col-span-2">
+            <div className="flex items-center gap-2 border-b border-border px-3 py-2">
+              <span className="term-dot h-3 w-3 border border-border bg-red" aria-hidden="true" />
+              <span className="term-dot h-3 w-3 border border-border bg-amber" aria-hidden="true" />
+              <span className="term-dot h-3 w-3 border border-border bg-cyan" aria-hidden="true" />
+              <span className="ml-2 font-display text-base text-muted">{t.hero.prompt}</span>
+            </div>
 
-            {/* Intro card — terminal window */}
-            <div className="border border-border bg-surface shadow-pixel">
-              <div className="flex items-center gap-2 border-b border-border px-3 py-2">
-                <span className="term-dot h-3 w-3 border border-border bg-red" aria-hidden="true" />
-                <span className="term-dot h-3 w-3 border border-border bg-amber" aria-hidden="true" />
-                <span className="term-dot h-3 w-3 border border-border bg-cyan" aria-hidden="true" />
-                <span className="ml-2 font-display text-base text-muted">{t.hero.prompt}</span>
-              </div>
-              <div className="px-5 py-6 sm:px-6">
-                <p className="mb-3 font-display text-xl text-cyan">{t.portal.hello}</p>
-                <p className="mb-6 max-w-prose text-sm leading-relaxed text-muted sm:text-base">
+            <div className="flex flex-1 flex-col justify-between gap-6 p-6 sm:p-8">
+              <div>
+                <h1 className="mb-3 font-wordmark text-3xl leading-tight text-amber sm:text-4xl">
+                  {t.hero.name}
+                </h1>
+                <p className="mb-5 font-display text-2xl text-fg sm:text-3xl">
+                  {t.hero.tagline}
+                  <span className="cursor-block" aria-hidden="true" />
+                </p>
+                <p className="mb-2 font-display text-xl text-cyan">{t.portal.hello}</p>
+                <p className="max-w-prose text-sm leading-relaxed text-muted sm:text-base">
                   {t.portal.intro}
                 </p>
+              </div>
 
-                {/* Social icons */}
-                <div className="flex items-center gap-2">
-                  <span className="mr-1 text-xs uppercase tracking-widest text-muted">
-                    {t.portal.socialHeading}
-                  </span>
-                  {socials.map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target={s.href.startsWith("http") ? "_blank" : undefined}
-                      rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      aria-label={s.label}
-                      title={s.label}
-                      className="btn-pixel-sm flex h-9 w-9 items-center justify-center font-display text-base text-cyan"
-                    >
-                      <span aria-hidden="true">{s.glyph}</span>
-                    </a>
+              {/* Tech stack */}
+              <div>
+                <p className="mb-2.5 font-display text-sm uppercase tracking-widest text-amber">
+                  <span aria-hidden="true">{"// "}</span>
+                  {t.about.skills}
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  {t.about.skillList.map((skill) => (
+                    <li key={skill} className="border border-border px-2.5 py-1 text-xs text-fg">
+                      {skill}
+                    </li>
                   ))}
-                </div>
+                </ul>
+              </div>
+
+              {/* Socials */}
+              <div className="flex items-center gap-2">
+                <span className="mr-1 text-xs uppercase tracking-widest text-muted">
+                  {t.portal.socialHeading}
+                </span>
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target={s.href.startsWith("http") ? "_blank" : undefined}
+                    rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    aria-label={s.label}
+                    title={s.label}
+                    className="btn-pixel-sm flex h-9 w-9 items-center justify-center font-display text-base text-cyan"
+                  >
+                    <span aria-hidden="true">{s.glyph}</span>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* ── RIGHT: clock + navigation ────────────────────────────── */}
-          <div className="space-y-5">
-            {/* Clock card */}
-            <div className="border border-border bg-surface px-5 py-5 shadow-pixel sm:px-6">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <p className="mb-1 text-xs uppercase tracking-widest text-amber">
-                    {dateStr || " "}
-                  </p>
-                  <p className="font-display text-5xl leading-none text-fg tabular-nums sm:text-6xl">
-                    {timeStr}
-                  </p>
-                </div>
-                <span className="flex items-center gap-2 text-sm text-cyan">
+          {/* Side column: clock + quote */}
+          <div className="flex min-h-0 flex-col gap-4">
+            {/* Clock */}
+            <div className="border border-border bg-surface px-5 py-5 shadow-pixel">
+              <div className="mb-1 flex items-center justify-between text-xs">
+                <span className="uppercase tracking-widest text-muted">
+                  {t.portal.localTimeLabel}
+                </span>
+                <span className="flex items-center gap-1.5 text-cyan">
                   <span className="h-2 w-2 bg-cyan" aria-hidden="true" />
                   {t.portal.status}
                 </span>
               </div>
+              <p className="font-display text-5xl leading-none text-fg tabular-nums sm:text-6xl">
+                {timeStr}
+              </p>
+              <p className="mt-2 text-xs tracking-wide text-amber">{dateStr || " "}</p>
             </div>
 
-            {/* Navigation grid */}
-            <div>
-              <p className="mb-3 flex items-center gap-2 font-display text-lg uppercase tracking-widest text-amber">
-                <span aria-hidden="true">{"// "}</span>
-                {t.portal.navHeading}
-              </p>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {tiles.map((tile) => {
-                  if (tile.onClick) {
-                    return (
-                      <button
-                        key={tile.key}
-                        onClick={tile.onClick}
-                        className={`${tileClass} text-left`}
-                      >
-                        <TileBody tile={tile} />
-                      </button>
-                    );
-                  }
-                  if (tile.external) {
-                    return (
-                      <a
-                        key={tile.key}
-                        href={tile.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={tileClass}
-                      >
-                        <TileBody tile={tile} />
-                      </a>
-                    );
-                  }
-                  return (
-                    <Link key={tile.key} href={tile.href!} className={tileClass}>
-                      <TileBody tile={tile} />
-                    </Link>
-                  );
-                })}
-              </div>
+            {/* Quote */}
+            <div className="flex min-h-0 flex-1 flex-col justify-center border border-border bg-surface px-5 py-6 shadow-pixel">
+              <span className="font-display text-3xl leading-none text-amber" aria-hidden="true">
+                &ldquo;
+              </span>
+              <p className="px-1 text-base leading-relaxed text-fg sm:text-lg">{quote}</p>
+              <span className="self-end font-display text-3xl leading-none text-amber" aria-hidden="true">
+                &rdquo;
+              </span>
             </div>
           </div>
         </div>
+
+        {/* ── Navigation tiles ─────────────────────────────────────────── */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {tiles.map((tile) => {
+            if (tile.onClick) {
+              return (
+                <button
+                  key={tile.key}
+                  onClick={tile.onClick}
+                  className={`${tileClass} text-left`}
+                >
+                  <TileBody tile={tile} />
+                </button>
+              );
+            }
+            if (tile.external) {
+              return (
+                <a
+                  key={tile.key}
+                  href={tile.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={tileClass}
+                >
+                  <TileBody tile={tile} />
+                </a>
+              );
+            }
+            return (
+              <Link key={tile.key} href={tile.href!} className={tileClass}>
+                <TileBody tile={tile} />
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Minimal footer line — keeps everything inside one screen */}
+        <p className="text-center text-[11px] tracking-wide text-muted">
+          {t.footer.copy}
+        </p>
       </div>
     </section>
   );

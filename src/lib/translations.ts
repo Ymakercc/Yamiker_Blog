@@ -117,6 +117,14 @@ export const translations = {
       navHeading: "导航",
       socialHeading: "找到我",
       status: "在线",
+      localTimeLabel: "本地时间",
+      quotes: [
+        "代码如诗，简洁即美。",
+        "保持好奇，持续构建。",
+        "在代码与文字之间，寻找平衡。",
+        "把复杂留给自己，把简单交给用户。",
+        "今天也是认真生活的一天。",
+      ],
       tiles: {
         about: "关于",
         blog: "博客",
@@ -258,6 +266,14 @@ export const translations = {
       navHeading: "Navigation",
       socialHeading: "Find me",
       status: "online",
+      localTimeLabel: "Local time",
+      quotes: [
+        "Code is poetry; simplicity is beauty.",
+        "Stay curious, keep building.",
+        "Finding balance between code and words.",
+        "Keep the complexity, ship the simplicity.",
+        "Another day of building things that matter.",
+      ],
       tiles: {
         about: "About",
         blog: "Blog",

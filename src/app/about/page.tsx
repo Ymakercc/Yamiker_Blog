@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import About from "@/components/About";
+import ContentPage from "@/components/ContentPage";
 
 export const metadata: Metadata = {
   title: "关于",
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen">
+    <ContentPage>
       <About />
-    </div>
+    </ContentPage>
   );
 }
