@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Press_Start_2P, VT323, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import ParticleFlow from "@/components/ParticleFlow";
-import PixelCursor from "@/components/PixelCursor";
+import AuraBg from "@/components/AuraBg";
 
 // Wordmark only — never used for body copy
 const pressStart = Press_Start_2P({
@@ -103,8 +102,7 @@ export default function RootLayout({
       className={`${pressStart.variable} ${vt323.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen font-mono scanlines">
-        <ParticleFlow />
-        <PixelCursor />
+        <AuraBg />
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

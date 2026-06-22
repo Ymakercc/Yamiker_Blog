@@ -136,6 +136,25 @@
   to { opacity: 1; }
 }
 
+/* ── Aurora background — smooth (not stepped), ambient only ──────────────
+   Orb 1: large amber drifts right then returns                            */
+@keyframes aura-drift-1 {
+  0%,  100% { transform: translate(0,    0); }
+  30%       { transform: translate(20vw, -18vh); }
+  65%       { transform: translate(8vw,  22vh); }
+}
+/* Orb 2: cyan drifts down-left then returns */
+@keyframes aura-drift-2 {
+  0%,  100% { transform: translate(0,    0); }
+  38%       { transform: translate(-24vw, 28vh); }
+  72%       { transform: translate(-10vw, -10vh); }
+}
+/* Orb 3: small amber barely moves, slight scale breathe */
+@keyframes aura-drift-3 {
+  0%,  100% { transform: translate(0,  0)    scale(1); }
+  50%       { transform: translate(-14vw, -20vh) scale(1.08); }
+}
+
 @layer utilities {
   /* Pixel art / icons render crisp, not smoothed */
   .pixelated {
@@ -295,69 +314,6 @@
   .dim-in {
     animation: dim-in 0.12s steps(2) both;
   }
-}
-
-/* ── Pixel cursor — targeting-bracket style ───────────────────────────────
-   Four corner brackets + center dot. Only active on pointer:fine devices.
-   drop-shadow on the container gives a coherent ambient glow across the
-   irregular bracket shape (box-shadow can't do this on partial borders).   */
-
-#px-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-  pointer-events: none;
-  width: 28px;
-  height: 28px;
-  filter: drop-shadow(0 0 4px rgba(255, 165, 31, 0.55));
-}
-
-/* Four corner brackets — each is a 7×7 box with only two adjacent sides */
-#px-cursor i {
-  position: absolute;
-  display: block;
-  width: 7px;
-  height: 7px;
-}
-#px-cursor i:nth-child(1) { top: 0;    left: 0;  border-top:    1.5px solid var(--amber); border-left:   1.5px solid var(--amber); }
-#px-cursor i:nth-child(2) { top: 0;    right: 0; border-top:    1.5px solid var(--amber); border-right:  1.5px solid var(--amber); }
-#px-cursor i:nth-child(3) { bottom: 0; left: 0;  border-bottom: 1.5px solid var(--amber); border-left:   1.5px solid var(--amber); }
-#px-cursor i:nth-child(4) { bottom: 0; right: 0; border-bottom: 1.5px solid var(--amber); border-right:  1.5px solid var(--amber); }
-
-/* Center dot */
-#px-cursor span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 3px;
-  height: 3px;
-  transform: translate(-50%, -50%);
-  background-color: var(--amber);
-}
-
-/* ── Hover interactive element → cyan ──────────────────────────────────── */
-#px-cursor[data-hover="1"] {
-  filter: drop-shadow(0 0 5px rgba(95, 215, 215, 0.65));
-}
-#px-cursor[data-hover="1"] i {
-  border-color: var(--cyan);
-}
-#px-cursor[data-hover="1"] span {
-  background-color: var(--cyan);
-}
-
-/* ── Click → bright amber burst ────────────────────────────────────────── */
-#px-cursor[data-active] {
-  filter: drop-shadow(0 0 8px rgba(255, 165, 31, 1)) drop-shadow(0 0 2px rgba(255, 165, 31, 1));
-}
-#px-cursor[data-active] i {
-  border-color: var(--amber);
-}
-#px-cursor[data-active] span {
-  background-color: var(--amber);
-  width: 5px;
-  height: 5px;
 }
 
 /* Respect users who ask for less motion: drop straight to the terminal state.
