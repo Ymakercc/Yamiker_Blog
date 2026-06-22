@@ -19,7 +19,7 @@ export default function AuraBg() {
           width: "68vw",
           height: "58vh",
           background:
-            "radial-gradient(ellipse at center, rgba(255,165,31,0.16) 0%, transparent 72%)",
+            "radial-gradient(ellipse at center, rgba(255,165,31,0.32) 0%, transparent 72%)",
           filter: "blur(130px)",
           animation: "aura-drift-1 34s ease-in-out infinite",
         }}
@@ -35,7 +35,7 @@ export default function AuraBg() {
           width: "50vw",
           height: "46vh",
           background:
-            "radial-gradient(ellipse at center, rgba(95,215,215,0.10) 0%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(95,215,215,0.20) 0%, transparent 70%)",
           filter: "blur(150px)",
           animation: "aura-drift-2 42s ease-in-out infinite",
         }}
@@ -51,7 +51,7 @@ export default function AuraBg() {
           width: "44vw",
           height: "40vh",
           background:
-            "radial-gradient(ellipse at center, rgba(255,165,31,0.09) 0%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(255,165,31,0.20) 0%, transparent 70%)",
           filter: "blur(110px)",
           animation: "aura-drift-3 27s ease-in-out infinite",
         }}
