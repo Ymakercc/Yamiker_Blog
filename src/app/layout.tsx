@@ -4,6 +4,9 @@ import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import AuraBg from "@/components/AuraBg";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import CommandPalette from "@/components/CommandPalette";
 
 // Runs before paint to apply the saved theme — avoids a flash of the default.
 const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='glass'||t==='pixel'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`;
@@ -113,7 +116,12 @@ export default function RootLayout({
       <body className="min-h-screen font-mono scanlines">
         <ThemeProvider>
           <AuraBg />
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <CommandPalette />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

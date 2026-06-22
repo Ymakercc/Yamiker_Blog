@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Navbar() {
   const { t, toggleLang } = useLang();
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,10 +21,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "#about", label: t.nav.about },
-    { href: "#blog", label: t.nav.blog },
-    { href: "#projects", label: t.nav.projects },
-    { href: "#contact", label: t.nav.contact },
+    { href: "/about", label: t.nav.about },
+    { href: "/blog", label: t.nav.blog },
+    { href: "/projects", label: t.nav.projects },
+    { href: "/contact", label: t.nav.contact },
   ];
 
   const openPalette = () => window.dispatchEvent(new Event("open-command-palette"));
@@ -34,20 +37,25 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Wordmark — Press Start 2P, small */}
-        <a
-          href="#home"
+        <Link
+          href="/"
           className="link-invert px-1 py-1 font-wordmark text-[10px] text-fg sm:text-xs"
         >
           Yamiekr_Home
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <ul className="hidden items-center gap-1 text-sm md:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a href={link.href} className="nav-link px-3 py-1.5 text-fg">
+              <Link
+                href={link.href}
+                className={`nav-link px-3 py-1.5 ${
+                  pathname === link.href ? "text-amber" : "text-fg"
+                }`}
+              >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -110,13 +118,15 @@ export default function Navbar() {
           <ul className="mx-auto flex max-w-6xl flex-col px-4 py-3 text-sm">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="link-invert block px-3 py-2.5 text-fg"
+                  className={`link-invert block px-3 py-2.5 ${
+                    pathname === link.href ? "text-amber" : "text-fg"
+                  }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
             <li>

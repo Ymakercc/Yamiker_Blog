@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useLang } from "@/contexts/LanguageContext";
 import { fuzzyMatch } from "@/lib/fuzzy";
 
@@ -24,12 +25,6 @@ type Command = {
   run: () => void;
 };
 
-function scrollToId(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "auto", block: "start" });
-}
-
 /** Render `text`, lighting the matched character indices in amber. */
 function Highlight({ text, indices }: { text: string; indices: number[] }) {
   if (!indices.length) return <>{text}</>;
@@ -51,6 +46,7 @@ function Highlight({ text, indices }: { text: string; indices: number[] }) {
 
 export default function CommandPalette() {
   const { t, toggleLang } = useLang();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -64,17 +60,17 @@ export default function CommandPalette() {
   }, []);
 
   const commands = useMemo<Command[]>(() => {
-    const goto = (id: string) => () => {
+    const goto = (path: string) => () => {
       close();
-      scrollToId(id);
+      router.push(path);
     };
     return [
-      { id: "home", name: "goto home", desc: t.cmd.desc.home, keywords: "home 首页 顶部 top", run: goto("home") },
-      { id: "about", name: "goto about", desc: t.cmd.desc.about, keywords: "about 关于 me", run: goto("about") },
-      { id: "blog", name: "goto blog", desc: t.cmd.desc.blog, keywords: "blog 博客 文章 posts writing", run: goto("blog") },
-      { id: "projects", name: "goto projects", desc: t.cmd.desc.projects, keywords: "projects 项目 作品 work", run: goto("projects") },
-      { id: "contact", name: "goto contact", desc: t.cmd.desc.contact, keywords: "contact 联系 email 邮件", run: goto("contact") },
-      { id: "tools", name: "open tools", desc: t.cmd.desc.tools, keywords: "tools 工具 小工具 devtool 项目", run: goto("projects") },
+      { id: "home", name: "goto home", desc: t.cmd.desc.home, keywords: "home 首页 顶部 top", run: goto("/") },
+      { id: "about", name: "goto about", desc: t.cmd.desc.about, keywords: "about 关于 me", run: goto("/about") },
+      { id: "blog", name: "goto blog", desc: t.cmd.desc.blog, keywords: "blog 博客 文章 posts writing", run: goto("/blog") },
+      { id: "projects", name: "goto projects", desc: t.cmd.desc.projects, keywords: "projects 项目 作品 work", run: goto("/projects") },
+      { id: "contact", name: "goto contact", desc: t.cmd.desc.contact, keywords: "contact 联系 email 邮件", run: goto("/contact") },
+      { id: "tools", name: "open tools", desc: t.cmd.desc.tools, keywords: "tools 工具 小工具 devtool 项目", run: goto("/projects") },
       {
         id: "lang",
         name: "switch lang",
@@ -96,7 +92,7 @@ export default function CommandPalette() {
         },
       },
     ];
-  }, [t, toggleLang, close]);
+  }, [t, toggleLang, close, router]);
 
   // Fuzzy filter on the command name, with a keyword fallback (covers Chinese).
   const results = useMemo(() => {

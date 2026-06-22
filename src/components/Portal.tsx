@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 
 // ── Line icons (24×24, stroke=currentColor) — read cleanly in both themes ──
@@ -99,10 +100,10 @@ export default function Portal() {
     external?: boolean;
     onClick?: () => void;
   }[] = [
-    { key: "about", label: t.portal.tiles.about, desc: t.portal.tileDesc.about, href: "#about" },
-    { key: "blog", label: t.portal.tiles.blog, desc: t.portal.tileDesc.blog, href: "#blog" },
-    { key: "projects", label: t.portal.tiles.projects, desc: t.portal.tileDesc.projects, href: "#projects" },
-    { key: "contact", label: t.portal.tiles.contact, desc: t.portal.tileDesc.contact, href: "#contact" },
+    { key: "about", label: t.portal.tiles.about, desc: t.portal.tileDesc.about, href: "/about" },
+    { key: "blog", label: t.portal.tiles.blog, desc: t.portal.tileDesc.blog, href: "/blog" },
+    { key: "projects", label: t.portal.tiles.projects, desc: t.portal.tileDesc.projects, href: "/projects" },
+    { key: "contact", label: t.portal.tiles.contact, desc: t.portal.tileDesc.contact, href: "/contact" },
     { key: "github", label: t.portal.tiles.github, desc: t.portal.tileDesc.github, href: "https://github.com/yamiker", external: true },
     { key: "command", label: t.portal.tiles.command, desc: t.portal.tileDesc.command, onClick: openPalette },
   ];
@@ -197,27 +198,37 @@ export default function Portal() {
                 {t.portal.navHeading}
               </p>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {tiles.map((tile) =>
-                  tile.onClick ? (
-                    <button
-                      key={tile.key}
-                      onClick={tile.onClick}
-                      className={`${tileClass} text-left`}
-                    >
+                {tiles.map((tile) => {
+                  if (tile.onClick) {
+                    return (
+                      <button
+                        key={tile.key}
+                        onClick={tile.onClick}
+                        className={`${tileClass} text-left`}
+                      >
+                        <TileBody tile={tile} />
+                      </button>
+                    );
+                  }
+                  if (tile.external) {
+                    return (
+                      <a
+                        key={tile.key}
+                        href={tile.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={tileClass}
+                      >
+                        <TileBody tile={tile} />
+                      </a>
+                    );
+                  }
+                  return (
+                    <Link key={tile.key} href={tile.href!} className={tileClass}>
                       <TileBody tile={tile} />
-                    </button>
-                  ) : (
-                    <a
-                      key={tile.key}
-                      href={tile.href}
-                      target={tile.external ? "_blank" : undefined}
-                      rel={tile.external ? "noopener noreferrer" : undefined}
-                      className={tileClass}
-                    >
-                      <TileBody tile={tile} />
-                    </a>
-                  )
-                )}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
