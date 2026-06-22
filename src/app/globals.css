@@ -297,48 +297,67 @@
   }
 }
 
-/* ── Pixel cursor ─────────────────────────────────────────────────────────
-   Shown only on pointer:fine (mouse) devices — JS sets display:block.
-   All transitions are "none" to match the zero-easing theme.              */
+/* ── Pixel cursor — targeting-bracket style ───────────────────────────────
+   Four corner brackets + center dot. Only active on pointer:fine devices.
+   drop-shadow on the container gives a coherent ambient glow across the
+   irregular bracket shape (box-shadow can't do this on partial borders).   */
+
 #px-cursor {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 99999;
   pointer-events: none;
-  width: 16px;
-  height: 16px;
-  border: 1px solid var(--amber);
-  /* no transition — pixel-sharp movement */
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 0 4px rgba(255, 165, 31, 0.55));
 }
+
+/* Four corner brackets — each is a 7×7 box with only two adjacent sides */
+#px-cursor i {
+  position: absolute;
+  display: block;
+  width: 7px;
+  height: 7px;
+}
+#px-cursor i:nth-child(1) { top: 0;    left: 0;  border-top:    1.5px solid var(--amber); border-left:   1.5px solid var(--amber); }
+#px-cursor i:nth-child(2) { top: 0;    right: 0; border-top:    1.5px solid var(--amber); border-right:  1.5px solid var(--amber); }
+#px-cursor i:nth-child(3) { bottom: 0; left: 0;  border-bottom: 1.5px solid var(--amber); border-left:   1.5px solid var(--amber); }
+#px-cursor i:nth-child(4) { bottom: 0; right: 0; border-bottom: 1.5px solid var(--amber); border-right:  1.5px solid var(--amber); }
 
 /* Center dot */
 #px-cursor span {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   transform: translate(-50%, -50%);
   background-color: var(--amber);
 }
 
-/* Hovering a link / button → cyan variant */
+/* ── Hover interactive element → cyan ──────────────────────────────────── */
 #px-cursor[data-hover="1"] {
+  filter: drop-shadow(0 0 5px rgba(95, 215, 215, 0.65));
+}
+#px-cursor[data-hover="1"] i {
   border-color: var(--cyan);
-  background-color: rgba(95, 215, 215, 0.08);
 }
 #px-cursor[data-hover="1"] span {
   background-color: var(--cyan);
 }
 
-/* Mouse button held → amber flash */
+/* ── Click → bright amber burst ────────────────────────────────────────── */
 #px-cursor[data-active] {
-  background-color: rgba(255, 165, 31, 0.35);
+  filter: drop-shadow(0 0 8px rgba(255, 165, 31, 1)) drop-shadow(0 0 2px rgba(255, 165, 31, 1));
+}
+#px-cursor[data-active] i {
   border-color: var(--amber);
 }
 #px-cursor[data-active] span {
   background-color: var(--amber);
+  width: 5px;
+  height: 5px;
 }
 
 /* Respect users who ask for less motion: drop straight to the terminal state.
