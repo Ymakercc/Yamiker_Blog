@@ -81,14 +81,19 @@ export default function Portal() {
     setQuote(q[Math.floor(Math.random() * q.length)]);
   }, [t]);
 
+  // Clock always shows US Eastern time, regardless of the visitor's timezone.
+  const TZ = "America/New_York";
   const locale = lang === "zh" ? "zh-CN" : "en-US";
-  const timeStr = now ? now.toLocaleTimeString(locale, { hour12: false }) : "--:--:--";
+  const timeStr = now
+    ? now.toLocaleTimeString(locale, { hour12: false, timeZone: TZ })
+    : "--:--:--";
   const dateStr = now
     ? now.toLocaleDateString(locale, {
         year: "numeric",
         month: "long",
         day: "numeric",
         weekday: "long",
+        timeZone: TZ,
       })
     : "";
 
