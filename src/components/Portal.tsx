@@ -125,11 +125,11 @@ export default function Portal() {
       id="home"
       className="relative min-h-screen px-4 pb-6 pt-16 sm:px-6 lg:h-screen lg:overflow-hidden lg:px-8"
     >
-      <div className="mx-auto flex h-full max-w-7xl flex-col gap-4">
+      <div className="mx-auto flex h-full max-w-7xl flex-col justify-center gap-4">
         {/* ── Top zone: identity (2/3) + clock & quote (1/3) ───────────── */}
-        <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-3">
+        <div className="grid gap-4 lg:grid-cols-3">
           {/* Identity card */}
-          <div className="flex min-h-0 flex-col border border-border bg-surface shadow-pixel lg:col-span-2">
+          <div className="flex flex-col border border-border bg-surface shadow-pixel lg:col-span-2">
             <div className="flex items-center gap-2 border-b border-border px-3 py-2">
               <span className="term-dot h-3 w-3 border border-border bg-red" aria-hidden="true" />
               <span className="term-dot h-3 w-3 border border-border bg-amber" aria-hidden="true" />
@@ -137,7 +137,7 @@ export default function Portal() {
               <span className="ml-2 font-display text-base text-muted">{t.hero.prompt}</span>
             </div>
 
-            <div className="flex flex-1 flex-col justify-between gap-6 p-6 sm:p-8">
+            <div className="flex flex-1 flex-col justify-start gap-6 p-6 sm:p-8">
               <div>
                 <h1 className="mb-3 font-wordmark text-3xl leading-tight text-amber sm:text-4xl">
                   {t.hero.name}
@@ -190,7 +190,7 @@ export default function Portal() {
           </div>
 
           {/* Side column: clock + quote */}
-          <div className="flex min-h-0 flex-col gap-4">
+          <div className="flex flex-col gap-4">
             {/* Clock */}
             <div className="border border-border bg-surface px-5 py-5 shadow-pixel">
               <div className="mb-1 flex items-center justify-between text-xs">
