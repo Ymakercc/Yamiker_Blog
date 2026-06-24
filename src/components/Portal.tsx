@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 import BootScreen from "@/components/BootScreen";
@@ -68,6 +68,7 @@ function Icon({ name }: { name: IconKey }) {
 export default function Portal() {
   const { t, lang } = useLang();
   const [booting, setBooting] = useState(true);
+  const finishBoot = useCallback(() => setBooting(false), []);
   const [now, setNow] = useState<Date | null>(null);
   const [quote, setQuote] = useState<string>(t.portal.quotes[0]);
 
@@ -129,7 +130,7 @@ export default function Portal() {
 
   return (
     <>
-      {booting && <BootScreen onDone={() => setBooting(false)} />}
+      {booting && <BootScreen onDone={finishBoot} />}
       <section
         id="home"
         className="relative min-h-screen px-4 pb-6 pt-16 sm:px-6 lg:h-screen lg:overflow-hidden lg:px-8"
