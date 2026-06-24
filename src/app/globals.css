@@ -139,6 +139,12 @@
   to { opacity: 1; transform: none; }
 }
 
+/* Boot overlay fade-out — quick stepped dim once the sequence completes */
+@keyframes boot-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 /* Command palette box: hard stepped scale-in */
 @keyframes palette-in {
   0% { opacity: 0; transform: scale(0.96); }
@@ -318,6 +324,11 @@
   .link-invert:focus-visible {
     background-color: var(--amber);
     color: var(--bg);
+  }
+
+  /* Boot overlay: stepped fade-out, matching the terminal motion language */
+  .boot-out {
+    animation: boot-out 0.28s steps(3) both;
   }
 
   /* Command palette entrance — hard stepped scale + backdrop dim */

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
+import BootScreen from "@/components/BootScreen";
 
 // ── Line icons (24×24, stroke=currentColor) — read cleanly in both themes ──
 const I = {
@@ -66,6 +67,7 @@ function Icon({ name }: { name: IconKey }) {
 
 export default function Portal() {
   const { t, lang } = useLang();
+  const [booting, setBooting] = useState(true);
   const [now, setNow] = useState<Date | null>(null);
   const [quote, setQuote] = useState<string>(t.portal.quotes[0]);
 
@@ -126,11 +128,17 @@ export default function Portal() {
     "group flex flex-col justify-center gap-1.5 border border-border bg-surface p-4 shadow-pixel-sm hover:border-amber focus-visible:border-amber";
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen px-4 pb-6 pt-16 sm:px-6 lg:h-screen lg:overflow-hidden lg:px-8"
-    >
-      <div className="mx-auto flex h-full max-w-7xl flex-col justify-center gap-4">
+    <>
+      {booting && <BootScreen onDone={() => setBooting(false)} />}
+      <section
+        id="home"
+        className="relative min-h-screen px-4 pb-6 pt-16 sm:px-6 lg:h-screen lg:overflow-hidden lg:px-8"
+      >
+        <div
+          className={`mx-auto flex h-full max-w-7xl flex-col justify-center gap-4 ${
+            booting ? "" : "step-in"
+          }`}
+        >
         {/* ── Top zone: identity (2/3) + clock & quote (1/3) ───────────── */}
         <div className="grid gap-4 lg:grid-cols-3">
           {/* Identity card */}
@@ -265,8 +273,9 @@ export default function Portal() {
         <p className="text-center text-[11px] tracking-wide text-muted">
           {t.footer.copy}
         </p>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }
 
