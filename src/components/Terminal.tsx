@@ -194,25 +194,31 @@ export default function Terminal({ banner }: { banner: ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col" onClick={focusInput}>
-      {/* Scrollback: identity banner + command transcript */}
-      <div
-        ref={scrollRef}
-        className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-6 sm:p-8"
-      >
+    <div className="flex flex-col" onClick={focusInput}>
+      {/* Identity banner (login scrollback) — always fully visible */}
+      <div className="flex flex-col gap-6 p-6 sm:p-8">
         {banner}
 
-        {history.map((e, i) => (
-          <div key={i} className="text-sm sm:text-base">
-            <div className="flex gap-2">
-              <span className="shrink-0 text-amber" aria-hidden="true">
-                $
-              </span>
-              <span className="text-fg">{e.input}</span>
-            </div>
-            {e.output != null && <div className="mt-1 pl-4">{e.output}</div>}
+        {/* Command transcript — only after the first command; capped height so
+            it scrolls inside the card instead of growing the page. */}
+        {history.length > 0 && (
+          <div
+            ref={scrollRef}
+            className="flex max-h-[30vh] flex-col gap-3 overflow-y-auto border-t border-border pt-5"
+          >
+            {history.map((e, i) => (
+              <div key={i} className="text-sm sm:text-base">
+                <div className="flex gap-2">
+                  <span className="shrink-0 text-amber" aria-hidden="true">
+                    $
+                  </span>
+                  <span className="text-fg">{e.input}</span>
+                </div>
+                {e.output != null && <div className="mt-1 pl-4">{e.output}</div>}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
 
       {/* Persistent prompt */}
