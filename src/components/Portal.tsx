@@ -136,15 +136,15 @@ export default function Portal() {
         id="home"
         className="relative min-h-screen px-4 pb-6 pt-16 sm:px-6 lg:h-screen lg:overflow-hidden lg:px-8"
       >
+        {/* Mobile: a single vertical flow (terminal → tiles → ambient → footer).
+            Desktop: the bento grid, restored via explicit grid placement. */}
         <div
-          className={`mx-auto flex h-full max-w-7xl flex-col justify-center gap-4 ${
+          className={`mx-auto flex h-full max-w-7xl flex-col gap-4 lg:grid lg:grid-cols-3 lg:content-center ${
             booting ? "" : "step-in"
           }`}
         >
-        {/* ── Top zone: identity (2/3) + clock & quote (1/3) ───────────── */}
-        <div className="grid gap-4 lg:grid-cols-3">
-          {/* Identity card */}
-          <div className="flex flex-col border border-border bg-surface shadow-pixel lg:col-span-2">
+          {/* Identity card — terminal hero */}
+          <div className="order-1 flex flex-col border border-border bg-surface shadow-pixel lg:order-none lg:col-span-2 lg:col-start-1 lg:row-start-1">
             <div className="flex items-center gap-2 border-b border-border px-3 py-2">
               <span className="term-dot h-3 w-3 border border-border bg-red" aria-hidden="true" />
               <span className="term-dot h-3 w-3 border border-border bg-amber" aria-hidden="true" />
@@ -206,11 +206,12 @@ export default function Portal() {
             } />
           </div>
 
-          {/* Side column: clock + quote */}
-          <div className="flex flex-col gap-4">
+          {/* Ambient: clock + quote — a compact 2-up band on mobile, the right
+              column on desktop. Demoted below the nav tiles on phones. */}
+          <div className="order-3 grid grid-cols-2 gap-3 lg:order-none lg:col-start-3 lg:row-start-1 lg:flex lg:flex-col lg:gap-4">
             {/* Clock */}
-            <div className="border border-border bg-surface px-5 py-5 shadow-pixel">
-              <div className="mb-1 flex items-center justify-between text-xs">
+            <div className="border border-border bg-surface px-4 py-4 shadow-pixel lg:px-5 lg:py-5">
+              <div className="mb-1 flex items-center justify-between text-[11px] sm:text-xs">
                 <span className="uppercase tracking-widest text-muted">
                   {t.portal.localTimeLabel}
                 </span>
@@ -219,27 +220,26 @@ export default function Portal() {
                   {t.portal.status}
                 </span>
               </div>
-              <p className="font-display text-5xl leading-none text-fg tabular-nums sm:text-6xl">
+              <p className="font-display text-3xl leading-none text-fg tabular-nums sm:text-4xl lg:text-6xl">
                 {timeStr}
               </p>
-              <p className="mt-2 text-xs tracking-wide text-amber">{dateStr || " "}</p>
+              <p className="mt-2 text-[11px] tracking-wide text-amber sm:text-xs">{dateStr || " "}</p>
             </div>
 
             {/* Quote */}
-            <div className="flex min-h-0 flex-1 flex-col justify-center border border-border bg-surface px-5 py-6 shadow-pixel">
-              <span className="font-display text-3xl leading-none text-amber" aria-hidden="true">
+            <div className="flex min-h-0 flex-1 flex-col justify-center border border-border bg-surface px-4 py-4 shadow-pixel lg:px-5 lg:py-6">
+              <span className="font-display text-2xl leading-none text-amber lg:text-3xl" aria-hidden="true">
                 &ldquo;
               </span>
-              <p className="px-1 text-base leading-relaxed text-fg sm:text-lg">{quote}</p>
-              <span className="self-end font-display text-3xl leading-none text-amber" aria-hidden="true">
+              <p className="px-1 text-sm leading-relaxed text-fg lg:text-lg">{quote}</p>
+              <span className="self-end font-display text-2xl leading-none text-amber lg:text-3xl" aria-hidden="true">
                 &rdquo;
               </span>
             </div>
           </div>
-        </div>
 
-        {/* ── Navigation tiles ─────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        {/* ── Navigation tiles — promoted right under the hero on mobile ── */}
+        <div className="order-2 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:order-none lg:col-span-3 lg:col-start-1 lg:row-start-2 lg:grid-cols-6">
           {tiles.map((tile) => {
             if (tile.onClick) {
               return (
@@ -274,7 +274,7 @@ export default function Portal() {
         </div>
 
         {/* Minimal footer line — keeps everything inside one screen */}
-        <p className="text-center text-[11px] tracking-wide text-muted">
+        <p className="order-4 text-center text-[11px] tracking-wide text-muted lg:order-none lg:col-span-3 lg:col-start-1 lg:row-start-3">
           {t.footer.copy}
         </p>
         </div>
