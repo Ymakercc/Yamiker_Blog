@@ -79,7 +79,7 @@ export default function Terminal({ banner }: { banner: ReactNode }) {
                 <span>{v}</span>
               </div>
             ))}
-            <div className="col-span-2 mt-1 text-muted/80">
+            <div className="col-span-2 mt-1 text-muted">
               tip: type a section name directly — {SECTIONS.join(", ")}
             </div>
           </div>
@@ -242,7 +242,7 @@ export default function Terminal({ banner }: { banner: ReactNode }) {
           autoCapitalize="off"
           aria-label="terminal command input"
           placeholder="type `help`"
-          className="w-full bg-transparent font-mono text-sm text-fg outline-none placeholder:text-muted/60 sm:text-base"
+          className="w-full bg-transparent font-mono text-sm text-fg outline-none placeholder:text-muted sm:text-base"
           style={{ caretColor: "var(--amber)" }}
         />
       </form>

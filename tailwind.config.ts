@@ -9,13 +9,46 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Press Start 2P — wordmark only, never body text
+        // Latin display/body faces have no CJK glyphs; this curated stack of
+        // system CJK fonts renders Chinese in a proper designed face (instead
+        // of an arbitrary system monospace) with zero download cost.
+        // ⬇ keep in sync with the body font-family in globals.css
+        // (PingFang = Apple, Microsoft YaHei = Windows, Noto/Source Han = Linux/Android)
+        // Press Start 2P — wordmark only, never body text (Latin-only by design)
         wordmark: ["var(--font-press-start)", "monospace"],
         // Departure Mono — distinctive pixel face for headings / eyebrows
-        display: ["var(--font-departure)", "monospace"],
+        display: [
+          "var(--font-departure)",
+          "PingFang SC",
+          "Microsoft YaHei",
+          "Noto Sans SC",
+          "Hiragino Sans GB",
+          "Source Han Sans SC",
+          "monospace",
+        ],
         // JetBrains Mono — body, code, data
-        mono: ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "monospace"],
-        sans: ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "monospace"],
+        mono: [
+          "var(--font-jetbrains)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "PingFang SC",
+          "Microsoft YaHei",
+          "Noto Sans SC",
+          "Hiragino Sans GB",
+          "Source Han Sans SC",
+          "monospace",
+        ],
+        sans: [
+          "var(--font-jetbrains)",
+          "ui-monospace",
+          "SFMono-Regular",
+          "PingFang SC",
+          "Microsoft YaHei",
+          "Noto Sans SC",
+          "Hiragino Sans GB",
+          "Source Han Sans SC",
+          "monospace",
+        ],
       },
       colors: {
         // The only palette — sourced from CSS variables in globals.css
