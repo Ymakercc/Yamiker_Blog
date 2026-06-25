@@ -3,10 +3,11 @@
 import { useEffect, useRef } from "react";
 
 /* ── Generative phosphor flow field ───────────────────────────────────────
-   Ambient background: sparse amber particles drift along a slow noise flow
-   field, leaving faint glowing trails — a living single-phosphor CRT haze.
-   Replaces the generic blurred aurora orbs. Deliberately quiet: the operable
-   terminal is the signature; this only whispers underneath it.
+   Ambient sci-fi background, kept restrained. Amber energy points drift along
+   a slow noise flow field, leaving glowing comet trails; a faint vertical
+   "scan sweep" passes across very slowly, like a sensor / CRT refresh. Reads
+   as a living single-phosphor CRT — present, but never showy. The operable
+   terminal is still the signature; this only sets the mood.
 
    - Lightweight vanilla Canvas2D (no p5/deps) — keeps the bundle lean.
    - Honors prefers-reduced-motion (renders one static frame).
@@ -47,14 +48,32 @@ export default function PhosphorField() {
     let [ar, ag, ab] = readAmber();
     let parts: Particle[] = [];
 
+    // Pre-rendered radial glow sprite for particle heads (cheap drawImage).
+    // Small + low-alpha: crisp energy points, not big bokeh blobs.
+    const GLOW = 9;
+    const glow = document.createElement("canvas");
+    glow.width = glow.height = GLOW;
+    const gctx = glow.getContext("2d")!;
+    const buildGlow = () => {
+      gctx.clearRect(0, 0, GLOW, GLOW);
+      const r = GLOW / 2;
+      const grad = gctx.createRadialGradient(r, r, 0, r, r, r);
+      grad.addColorStop(0, `rgba(${ar},${ag},${ab},0.5)`);
+      grad.addColorStop(0.5, `rgba(${ar},${ag},${ab},0.12)`);
+      grad.addColorStop(1, `rgba(${ar},${ag},${ab},0)`);
+      gctx.fillStyle = grad;
+      gctx.fillRect(0, 0, GLOW, GLOW);
+    };
+    buildGlow();
+
     const count = () =>
-      Math.round(Math.min(180, Math.max(56, (w * h) / 12000)));
+      Math.round(Math.min(140, Math.max(56, (w * h) / 14000)));
 
     const seed = () => {
       parts = Array.from({ length: count() }, () => {
         const x = Math.random() * w;
         const y = Math.random() * h;
-        return { x, y, px: x, py: y, sp: 0.25 + Math.random() * 0.7 };
+        return { x, y, px: x, py: y, sp: 0.25 + Math.random() * 0.75 };
       });
     };
 
@@ -82,18 +101,31 @@ export default function PhosphorField() {
     let raf = 0;
     let running = !reduce;
     let t0 = performance.now();
+    const SWEEP_MS = 26000;
 
     const frame = (now: number) => {
       const t = now - t0;
-      // Fade previous trails toward transparent (keeps canvas see-through).
+
+      // Fade previous frame toward transparent (keeps canvas see-through).
       ctx.globalCompositeOperation = "destination-out";
-      ctx.fillStyle = "rgba(0,0,0,0.04)";
+      ctx.fillStyle = "rgba(0,0,0,0.07)";
       ctx.fillRect(0, 0, w, h);
 
-      // Additive amber streaks.
       ctx.globalCompositeOperation = "lighter";
+
+      // Slow vertical scan sweep — the one overt sci-fi gesture, barely there.
+      const band = w * 0.14;
+      const sx = ((t % SWEEP_MS) / SWEEP_MS) * (w + 2 * band) - band;
+      const sweep = ctx.createLinearGradient(sx - band, 0, sx + band, 0);
+      sweep.addColorStop(0, `rgba(${ar},${ag},${ab},0)`);
+      sweep.addColorStop(0.5, `rgba(${ar},${ag},${ab},0.022)`);
+      sweep.addColorStop(1, `rgba(${ar},${ag},${ab},0)`);
+      ctx.fillStyle = sweep;
+      ctx.fillRect(sx - band, 0, band * 2, h);
+
+      // Trails.
       ctx.lineWidth = 1;
-      ctx.strokeStyle = `rgba(${ar},${ag},${ab},0.2)`;
+      ctx.strokeStyle = `rgba(${ar},${ag},${ab},0.18)`;
       ctx.beginPath();
       for (const p of parts) {
         const a = angle(p.x, p.y, t);
@@ -101,7 +133,6 @@ export default function PhosphorField() {
         p.py = p.y;
         p.x += Math.cos(a) * p.sp;
         p.y += Math.sin(a) * p.sp;
-        // Wrap at edges; skip the seam segment so it doesn't streak across.
         let wrapped = false;
         if (p.x < 0) { p.x += w; wrapped = true; }
         else if (p.x > w) { p.x -= w; wrapped = true; }
@@ -113,6 +144,10 @@ export default function PhosphorField() {
       }
       ctx.stroke();
 
+      // Glowing heads (energy points).
+      const o = GLOW / 2;
+      for (const p of parts) ctx.drawImage(glow, p.x - o, p.y - o);
+
       if (running) raf = requestAnimationFrame(frame);
     };
 
@@ -121,8 +156,8 @@ export default function PhosphorField() {
     if (reduce) {
       // Static frame: a sparse glowing scatter, no motion.
       ctx.globalCompositeOperation = "lighter";
-      ctx.fillStyle = `rgba(${ar},${ag},${ab},0.18)`;
-      for (const p of parts) ctx.fillRect(p.x, p.y, 1.4, 1.4);
+      const o = GLOW / 2;
+      for (const p of parts) ctx.drawImage(glow, p.x - o, p.y - o);
     } else {
       raf = requestAnimationFrame(frame);
     }
@@ -143,6 +178,7 @@ export default function PhosphorField() {
     };
     const mo = new MutationObserver(() => {
       [ar, ag, ab] = readAmber();
+      buildGlow();
     });
 
     window.addEventListener("resize", onResize);
