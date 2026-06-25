@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 import BootScreen from "@/components/BootScreen";
+import Terminal from "@/components/Terminal";
 
 // ── Line icons (24×24, stroke=currentColor) — read cleanly in both themes ──
 const I = {
@@ -151,7 +152,8 @@ export default function Portal() {
               <span className="ml-2 font-display text-base text-muted">{t.hero.prompt}</span>
             </div>
 
-            <div className="flex flex-1 flex-col justify-start gap-6 p-6 sm:p-8">
+            <Terminal banner={
+              <>
               <div>
                 <h1 className="mb-3 font-wordmark text-3xl leading-tight text-amber sm:text-4xl">
                   {t.hero.name}
@@ -200,7 +202,8 @@ export default function Portal() {
                   </a>
                 ))}
               </div>
-            </div>
+              </>
+            } />
           </div>
 
           {/* Side column: clock + quote */}
