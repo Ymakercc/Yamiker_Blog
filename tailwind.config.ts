@@ -11,8 +11,8 @@ const config: Config = {
       fontFamily: {
         // Press Start 2P — wordmark only, never body text
         wordmark: ["var(--font-press-start)", "monospace"],
-        // VT323 — readable pixel font for headings / eyebrows
-        display: ["var(--font-vt323)", "monospace"],
+        // Departure Mono — distinctive pixel face for headings / eyebrows
+        display: ["var(--font-departure)", "monospace"],
         // JetBrains Mono — body, code, data
         mono: ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "monospace"],
         sans: ["var(--font-jetbrains)", "ui-monospace", "SFMono-Regular", "monospace"],

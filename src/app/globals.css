@@ -4,15 +4,19 @@
 
 @layer base {
   :root {
-    /* Pixel-Terminal palette — the only colors used site-wide */
-    --bg: #0e0c0a;
-    --surface: #1a1612;
-    --fg: #e8dcc8;
-    --muted: #8a7f6d;
-    --amber: #ffa51f;
-    --cyan: #5fd7d7;
-    --red: #e5484d;
-    --border: #2a241c;
+    /* Pixel-Terminal palette — single-phosphor amber CRT, monochrome.
+       Hierarchy comes from brightness within one hue, not from a second
+       accent color. The only colors used site-wide. */
+    --bg: #0c0a06; /* near-black, warm */
+    --surface: #16110a; /* raised panel */
+    --fg: #f1dcab; /* warm paper-amber body text (phosphor glow, not white) */
+    --muted: #9a7833; /* dim phosphor — secondary text */
+    --amber: #ffb000; /* bright phosphor — primary accent / active state */
+    /* Repurposed: was cyan. Now a secondary amber so legacy `text-cyan` /
+       `bg-cyan` usages stay on-hue and the palette reads truly monochrome. */
+    --cyan: #e09a2b;
+    --red: #e5484d; /* errors / destructive only */
+    --border: #3a2b12; /* amber-tinted hairline (not gray) */
   }
 
   /* Zero rounding — pixel theme only. Glass theme restores soft corners. */

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, VT323, JetBrains_Mono } from "next/font/google";
+import { Press_Start_2P, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import AuraBg from "@/components/AuraBg";
@@ -18,11 +19,12 @@ const pressStart = Press_Start_2P({
   display: "swap",
 });
 
-// Headings / eyebrows — a readable pixel face
-const vt323 = VT323({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-vt323",
+// Headings / eyebrows — a distinctive modern pixel face (self-hosted).
+// Departure Mono replaces the ubiquitous VT323 to break out of the
+// generic "retro terminal" look.
+const departureMono = localFont({
+  src: "./fonts/DepartureMono-Regular.woff2",
+  variable: "--font-departure",
   display: "swap",
 });
 
@@ -107,7 +109,7 @@ export default function RootLayout({
       lang="zh"
       data-theme="pixel"
       suppressHydrationWarning
-      className={`${pressStart.variable} ${vt323.variable} ${jetbrainsMono.variable}`}
+      className={`${pressStart.variable} ${departureMono.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
