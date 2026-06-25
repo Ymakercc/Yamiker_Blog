@@ -5,7 +5,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import AuraBg from "@/components/AuraBg";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import Controls from "@/components/Controls";
+import StatusBar from "@/components/StatusBar";
 import CommandPalette from "@/components/CommandPalette";
 
 // Runs before paint to apply the saved theme — avoids a flash of the default.
@@ -118,7 +118,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AuraBg />
           <LanguageProvider>
-            <Controls />
+            <StatusBar />
             <main>{children}</main>
             <CommandPalette />
           </LanguageProvider>
