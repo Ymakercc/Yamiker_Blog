@@ -3,7 +3,7 @@ import { Press_Start_2P, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import AuraBg from "@/components/AuraBg";
+import PhosphorField from "@/components/PhosphorField";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import StatusBar from "@/components/StatusBar";
 import CommandPalette from "@/components/CommandPalette";
@@ -116,7 +116,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen font-mono scanlines">
         <ThemeProvider>
-          <AuraBg />
+          <PhosphorField />
           <LanguageProvider>
             <StatusBar />
             <main>{children}</main>
