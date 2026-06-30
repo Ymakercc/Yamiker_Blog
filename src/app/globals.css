@@ -432,3 +432,122 @@
     display: none;
   }
 }
+
+/* ── Article prose — styling for rendered Markdown HTML ────────────────────
+   Targets the .prose-terminal container (dangerouslySetInnerHTML output), so
+   plain CSS rather than Tailwind classes. Code stays single-phosphor amber —
+   no rainbow syntax highlighting, on-brand and zero runtime cost. */
+.prose-terminal {
+  color: var(--fg);
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+.prose-terminal > :first-child {
+  margin-top: 0;
+}
+.prose-terminal h2,
+.prose-terminal h3 {
+  font-family: var(--font-departure), "PingFang SC", "Microsoft YaHei",
+    "Noto Sans SC", monospace;
+  color: var(--amber);
+  line-height: 1.25;
+  scroll-margin-top: 5rem;
+}
+.prose-terminal h2 {
+  font-size: 1.6rem;
+  margin: 2.4rem 0 0.9rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.prose-terminal h3 {
+  font-size: 1.25rem;
+  margin: 1.8rem 0 0.6rem;
+  color: var(--fg);
+}
+.prose-terminal p {
+  margin: 1rem 0;
+}
+.prose-terminal a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-terminal strong {
+  color: var(--fg);
+  font-weight: 700;
+}
+.prose-terminal ul,
+.prose-terminal ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.prose-terminal ul {
+  list-style: none;
+}
+.prose-terminal ul > li::before {
+  content: "—";
+  position: absolute;
+  margin-left: -1.5rem;
+  color: var(--amber);
+}
+.prose-terminal ol {
+  list-style: decimal;
+}
+.prose-terminal li {
+  position: relative;
+  margin: 0.35rem 0;
+}
+.prose-terminal blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1rem;
+  border-left: 2px solid var(--amber);
+  color: var(--muted);
+}
+.prose-terminal code {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.85em;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+  color: var(--amber);
+}
+.prose-terminal pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.prose-terminal pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--fg);
+  font-size: inherit;
+}
+.prose-terminal hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+.prose-terminal img {
+  max-width: 100%;
+  border: 1px solid var(--border);
+}
+.prose-terminal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+.prose-terminal th,
+.prose-terminal td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+}
+.prose-terminal th {
+  color: var(--amber);
+}

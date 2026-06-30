@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import BlogPreview from "@/components/BlogPreview";
+import BlogList from "@/components/BlogList";
 import ContentPage from "@/components/ContentPage";
+import { getAllPostsMeta } from "@/lib/posts";
 
 export const metadata: Metadata = {
   title: "博客",
@@ -8,9 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
+  const posts = getAllPostsMeta();
   return (
     <ContentPage>
-      <BlogPreview />
+      <BlogList posts={posts} />
     </ContentPage>
   );
 }
