@@ -1,31 +1,19 @@
 {
   "schema": "ccm-summary/1",
-  "generated_at": 1783473421,
-  "generated_iso": "2026-07-07T21:17:01-0400",
+  "generated_at": 1783484221,
+  "generated_iso": "2026-07-08T00:17:01-0400",
   "current": {
-    "active_sessions": 0,
-    "claude_procs_now": 0,
+    "active_sessions": 2,
+    "claude_procs_now": 2,
     "hermes_high_load": false
   },
   "totals": {
     "events_24h": 0,
     "events_7d": 0,
-    "alerts_24h": 0,
-    "alerts_7d": 0
+    "alerts_24h": 1,
+    "alerts_7d": 1
   },
   "invocations_by_hour": [
-    {
-      "h": "2026-07-06T22:00",
-      "c": 0
-    },
-    {
-      "h": "2026-07-06T23:00",
-      "c": 0
-    },
-    {
-      "h": "2026-07-07T00:00",
-      "c": 0
-    },
     {
       "h": "2026-07-07T01:00",
       "c": 0
@@ -109,13 +97,21 @@
     {
       "h": "2026-07-07T21:00",
       "c": 0
+    },
+    {
+      "h": "2026-07-07T22:00",
+      "c": 0
+    },
+    {
+      "h": "2026-07-07T23:00",
+      "c": 0
+    },
+    {
+      "h": "2026-07-08T00:00",
+      "c": 0
     }
   ],
   "events_by_day": [
-    {
-      "d": "2026-07-01",
-      "c": 0
-    },
     {
       "d": "2026-07-02",
       "c": 0
@@ -139,10 +135,18 @@
     {
       "d": "2026-07-07",
       "c": 0
+    },
+    {
+      "d": "2026-07-08",
+      "c": 0
     }
   ],
-  "alerts_by_type": {},
-  "alerts_by_severity": {},
+  "alerts_by_type": {
+    "high_cpu": 1
+  },
+  "alerts_by_severity": {
+    "warning": 1
+  },
   "monitor": {
     "version": "1.0.0",
     "interval_hint_sec": 60
