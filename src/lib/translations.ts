@@ -68,10 +68,10 @@ export const translations = {
           url: "https://yamiker.cloud",
         },
         {
-          name: "DevTool Kit",
-          description: "面向开发者的在线工具集合，包含 JSON 格式化、Base64 编解码、正则测试等常用工具，纯前端实现无需后端。",
-          tags: ["React", "工具"],
-          url: "#",
+          name: "firstboot",
+          description: "新电脑开箱装配工具。双击一次，自动从 C 盘切出 D 盘、建好文件夹、把文档下载图片的默认位置挪到 D 盘、装齐常用软件。带「只体检」模式，先看清楚再动手。",
+          tags: ["PowerShell", "Windows", "工具"],
+          url: "/blog/firstboot-new-pc-setup",
         },
         {
           name: "Note Sync",
@@ -216,10 +216,10 @@ export const translations = {
           url: "https://yamiker.cloud",
         },
         {
-          name: "DevTool Kit",
-          description: "A collection of online developer tools including JSON formatter, Base64 encoder/decoder, and regex tester — pure frontend, no backend required.",
-          tags: ["React", "Tools"],
-          url: "#",
+          name: "firstboot",
+          description: "A one-click setup tool for a brand-new Windows laptop: carve a D drive out of C, seed it with folders, move the default save locations off C, and install the usual apps. Ships with a check-only mode so you can look before it touches anything.",
+          tags: ["PowerShell", "Windows", "Tools"],
+          url: "/blog/firstboot-new-pc-setup",
         },
         {
           name: "Note Sync",
