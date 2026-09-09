@@ -1,31 +1,19 @@
 {
   "schema": "ccm-summary/1",
-  "generated_at": 1788916621,
-  "generated_iso": "2026-09-08T18:17:01-0700",
+  "generated_at": 1788927421,
+  "generated_iso": "2026-09-08T21:17:01-0700",
   "current": {
-    "active_sessions": 6,
-    "claude_procs_now": 6,
+    "active_sessions": 2,
+    "claude_procs_now": 2,
     "hermes_high_load": false
   },
   "totals": {
-    "events_24h": 0,
-    "events_7d": 0,
+    "events_24h": 2,
+    "events_7d": 2,
     "alerts_24h": 0,
     "alerts_7d": 0
   },
   "invocations_by_hour": [
-    {
-      "h": "2026-09-07T19:00",
-      "c": 0
-    },
-    {
-      "h": "2026-09-07T20:00",
-      "c": 0
-    },
-    {
-      "h": "2026-09-07T21:00",
-      "c": 0
-    },
     {
       "h": "2026-09-07T22:00",
       "c": 0
@@ -109,6 +97,18 @@
     {
       "h": "2026-09-08T18:00",
       "c": 0
+    },
+    {
+      "h": "2026-09-08T19:00",
+      "c": 2
+    },
+    {
+      "h": "2026-09-08T20:00",
+      "c": 0
+    },
+    {
+      "h": "2026-09-08T21:00",
+      "c": 0
     }
   ],
   "events_by_day": [
@@ -138,7 +138,7 @@
     },
     {
       "d": "2026-09-08",
-      "c": 0
+      "c": 2
     }
   ],
   "alerts_by_type": {},
